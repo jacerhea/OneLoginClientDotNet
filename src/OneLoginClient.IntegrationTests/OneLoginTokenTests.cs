@@ -22,6 +22,13 @@ namespace OneLogin.IntegrationTests
         }
 
         [Fact]
+        public void Invalid_Region_Throws_An_ArgumentException_In_OneLoginClient_Constructor()
+        {
+            Action createClientWithEmptyClientSecret = () => new OneLoginClient("Client id", "Client Secret", region:"hello");
+            createClientWithEmptyClientSecret.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
         public async Task GetTokenTest()
         {
             var token = await _oneLoginClient.GenerateTokens();
@@ -37,6 +44,12 @@ namespace OneLogin.IntegrationTests
         public async Task GetUserByIdTest()
         {
             var usersResponse = await _oneLoginClient.GetAppsForUser(32715399);
+        }
+
+        [Fact]
+        public async Task GetGetRolesForUserTest()
+        {
+            var rolesForUser = await _oneLoginClient.GetRolesForUser(32715399);
         }
     }
 }

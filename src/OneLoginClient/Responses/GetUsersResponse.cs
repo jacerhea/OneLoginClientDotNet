@@ -13,7 +13,7 @@ namespace OneLogin.Responses
     /// For details about each element in the User resource, see <a href="https://developers.onelogin.com/api-docs/1/users/user-resource">User Resource</a>.
     /// </summary>
     [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-users")]
-    public class GetUsersResponse : BaseResponse<User>
+    public class GetUsersResponse : PaginationBaseResponse<User>
     {
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -17,13 +18,16 @@ namespace OneLogin
     {
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private readonly string _region;
         private static HttpClient _client;
+        private static List<string> ValidRegions = new List<string>{"us", "eu"};
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OneLoginClient"/> class.
         /// </summary>
         /// <param name="clientId">The client id to connect with.</param>
         /// <param name="clientSecret">The client secret to connect with.</param>
+        /// <param name="region"></param>
         /// <example>
         /// <code>
         /// var client = new OneLoginClient("client id", "client secret")
@@ -31,12 +35,14 @@ namespace OneLogin
         /// </example>
         /// <exception cref="System.ArgumentNullException">clientId</exception>
         /// <exception cref="System.ArgumentNullException">clientSecret</exception>
-        public OneLoginClient(string clientId, string clientSecret)
+        public OneLoginClient(string clientId, string clientSecret, string region = "us")
         {
             if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientSecret));
             if (string.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
+            if(!ValidRegions.Contains(region)) throw new ArgumentException("Invliad region code", nameof(region));
             _clientId = clientId;
             _clientSecret = clientSecret;
+            _region = region;
         }
 
         public async Task<HttpClient> GetClient()
@@ -109,8 +115,17 @@ namespace OneLogin
         {
             var client = await GetClient();
             var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/apps");
+            response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<GetAppsForUserResponse>(responseBody);
+        }
+
+        public async Task<GetRolesForUser> GetRolesForUser(int id)
+        {
+            var client = await GetClient();
+            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/roles");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<GetRolesForUser>(responseBody);
         }
     }
 }
