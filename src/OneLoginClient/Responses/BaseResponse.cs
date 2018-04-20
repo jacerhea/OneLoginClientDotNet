@@ -1,8 +1,7 @@
 ﻿namespace OneLogin.Responses
 {
-    public abstract class BaseResponse<T>
+    public abstract class BaseResponse<T> : BaseStatusResponse
     {
-        public Status Status { get; set; }
         public T[] Data { get; set; }
     }
 }

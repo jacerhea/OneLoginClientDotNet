@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using OneLogin.Responses;
 
 namespace OneLogin
 {
     public static class OneLoginClientExtensions
     {
-        public static T EnsureSuccess<T, TK>(T source) where T: BaseResponse<TK>
+        public static T EnsureSuccess<T>(this T source) where T : BaseStatusResponse
         {
             if (source.Status.Error)
             {
