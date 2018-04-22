@@ -21,7 +21,7 @@ namespace OneLogin
         private readonly string _clientSecret;
         private readonly string _region;
         private static HttpClient _client;
-        private static readonly List<string> ValidRegions = new List<string>{"us", "eu"};
+        private static readonly List<string> ValidRegions = new List<string> { "us", "eu" };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OneLoginClient"/> class.
@@ -40,7 +40,7 @@ namespace OneLogin
         {
             if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientSecret));
             if (string.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
-            if(!ValidRegions.Contains(region)) throw new ArgumentException("Invalid region code", nameof(region));
+            if (!ValidRegions.Contains(region)) throw new ArgumentException("Invalid region code", nameof(region));
             _clientId = clientId;
             _clientSecret = clientSecret;
             _region = region;
@@ -54,6 +54,7 @@ namespace OneLogin
             }
 
             var token = await GenerateTokens();
+            token.EnsureSuccess();
             var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", "us")) };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
             return _client = client;
@@ -87,10 +88,8 @@ namespace OneLogin
             // adds the utf-8 charset extension to it which is not compatible with OneLogin
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.SendAsync(request);
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<GenerateTokensResponse>(responseBody);
+            var response = client.SendAsync(request);
+            return await GetResponse<GenerateTokensResponse>(response);
         }
 
         /// <summary>
@@ -100,10 +99,7 @@ namespace OneLogin
         [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-users")]
         public async Task<GetUsersResponse> GetUsers()
         {
-            var client = await GetClient();
-            var response = await client.GetAsync(Endpoints.ONELOGIN_USERS);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetUsersResponse>(responseBody);
+            return await GetResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS);
         }
 
         /// <summary>
@@ -113,10 +109,7 @@ namespace OneLogin
         /// <returns></returns>
         public async Task<GetUsersResponse> GetUser(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetUsersResponse>(responseBody);
+            return await GetResource<GetUsersResponse>($"{Endpoints.ONELOGIN_USERS}/{id}");
         }
 
         /// <summary>
@@ -127,11 +120,8 @@ namespace OneLogin
         [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-apps-for-user")]
         public async Task<GetAppsForUserResponse> GetAppsForUser(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/apps");
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetAppsForUserResponse>(responseBody);
+            return await GetResource<GetAppsForUserResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/apps");
+
         }
 
         /// <summary>
@@ -140,11 +130,7 @@ namespace OneLogin
         /// <returns></returns>
         public async Task<GetGroupsResponse> GetGroups()
         {
-            var client = await GetClient();
-            var response = await client.GetAsync(Endpoints.ONELOGIN_GROUPS);
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetGroupsResponse>(responseBody);
+            return await GetResource<GetGroupsResponse>(Endpoints.ONELOGIN_GROUPS);
         }
 
         /// <summary>
@@ -154,27 +140,17 @@ namespace OneLogin
         //todo: onelogin documentation is wrong.
         public async Task<GetGroupsResponse> GetGroup(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_GROUPS}/{id}");
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetGroupsResponse>(responseBody);
+            return await GetResource<GetGroupsResponse>($"{Endpoints.ONELOGIN_GROUPS}/{id}");
         }
 
         public async Task<GetRolesForUser> GetRolesForUser(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/roles");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetRolesForUser>(responseBody);
+            return await GetResource<GetRolesForUser>($"{Endpoints.ONELOGIN_USERS}/{id}/roles");
         }
 
         public async Task<GetEventTypesResponse> GetEventTypes()
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_EVENTS}/types");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetEventTypesResponse>(responseBody);
+            return await GetResource<GetEventTypesResponse>($"{Endpoints.ONELOGIN_EVENTS}/types");
         }
 
         public async Task<GetEventsResponse> GetEvents(string clientId = null, DateTime? created_at = null, string directory_id = null,
@@ -188,8 +164,7 @@ namespace OneLogin
 
         public async Task<GetEventsResponse> GetEvents(long id)
         {
-            var client = await GetClient();
-            return await GetResponse<GetEventsResponse>(client.GetAsync($"{Endpoints.ONELOGIN_EVENTS}/{id}"));
+            return await GetResource<GetEventsResponse>($"{Endpoints.ONELOGIN_EVENTS}/{id}");
         }
 
 
@@ -204,7 +179,7 @@ namespace OneLogin
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(Endpoints.Token.Replace("<us_or_eu>", "us")),
+                RequestUri = new Uri(Endpoints.ONELOGIN_USERS),
                 Content = content
             };
 
@@ -213,10 +188,8 @@ namespace OneLogin
             httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var client = await GetClient();
-            var response = await client.SendAsync(httpRequest);
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<GetUsersResponse>(responseBody);
+            var response = client.SendAsync(httpRequest);
+            return await GetResponse<GetUsersResponse>(response);
         }
 
 
@@ -225,13 +198,13 @@ namespace OneLogin
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GetUsersResponse> UpdateUserById(CreateUserRequest request)
+        public async Task<GetUsersResponse> UpdateUserById(UpdateUserRequest request)
         {
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(Endpoints.Token.Replace("<us_or_eu>", "us")),
+                RequestUri = new Uri(Endpoints.ONELOGIN_USERS),
                 Content = content
             };
 
@@ -240,28 +213,19 @@ namespace OneLogin
             httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var client = await GetClient();
-            var response = await client.SendAsync(httpRequest);
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<GetUsersResponse>(responseBody);
+            var response = client.SendAsync(httpRequest);
+            return await GetResponse<GetUsersResponse>(response);
         }
 
         public async Task<GetAvailableAuthenticationFactorsResponse> GetAvailableAuthenticationFactors(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetAvailableAuthenticationFactorsResponse>(responseBody);
+            return await GetResource<GetAvailableAuthenticationFactorsResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
         }
 
         public async Task<GetEnrolledAuthenticationFactorResponse> GetEnrolledAuthenticationFactors(int id)
         {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetEnrolledAuthenticationFactorResponse>(responseBody);
+            return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
         }
-
 
         public async Task<List<T>> GetNextPages<T, TK>(T source, int? pages = null) where T : PaginationBaseResponse<TK>
         {
@@ -295,11 +259,10 @@ namespace OneLogin
             return results;
         }
 
-        private async Task<T> GetResource<T>()
+        private async Task<T> GetResource<T>(string url)
         {
-            await client.GetAsync($"{Endpoints.ONELOGIN_EVENTS}/id");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetEventsResponse>(responseBody);
+            var client = await GetClient();
+            return await GetResponse<T>(client.GetAsync(url));
         }
 
         private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)

@@ -105,5 +105,19 @@ namespace OneLogin.IntegrationTests
             var eventsResponse = (await _oneLoginClient.GetEvents())
                 .EnsureSuccess();
         }
+
+        [Fact]
+        public async Task GetEventsInterpolatedTest()
+        {
+            var eventsResponse = (await _oneLoginClient.GetEvents())
+                .EnsureSuccess();
+            var eventTypes = (await _oneLoginClient.GetEventTypes());
+
+            var results = eventsResponse.Data
+                                        .Select(d => d.InterpolateEvent(eventTypes.Data.ToList()))
+                                        .ToList();
+
+
+        }
     }
 }
