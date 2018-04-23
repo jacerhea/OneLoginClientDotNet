@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using OneLogin.Responses;
@@ -8,6 +10,8 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginTokenTests
     {
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret")
+
         [Fact]
         public void Empty_ClientId_Throws_An_Exception_In_OneLoginClient()
         {
@@ -113,11 +117,12 @@ namespace OneLogin.IntegrationTests
                 .EnsureSuccess();
             var eventTypes = (await _oneLoginClient.GetEventTypes());
 
-            var results = eventsResponse.Data
-                                        .Select(d => d.InterpolateEvent(eventTypes.Data.ToList()))
-                                        .ToList();
+            var tenEventPages = await _oneLoginClient.GetNextPages(eventsResponse, 20);
 
-
+            var results = tenEventPages
+                .SelectMany(re => re.Data)
+                .Select(d => d.InterpolateEvent(eventTypes.Data.ToList()))
+                .ToList();
         }
     }
 }

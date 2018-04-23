@@ -55,7 +55,7 @@ namespace OneLogin
 
             var token = await GenerateTokens();
             token.EnsureSuccess();
-            var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", "us")) };
+            var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", _region)) };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
             return _client = client;
         }
@@ -80,7 +80,7 @@ namespace OneLogin
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(Endpoints.Token.Replace("<us_or_eu>", "us")),
+                RequestUri = new Uri(Endpoints.Token.Replace("<us_or_eu>", _region)),
                 Content = content
             };
 
@@ -227,23 +227,25 @@ namespace OneLogin
             return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
         }
 
-        public async Task<List<T>> GetNextPages<T, TK>(T source, int? pages = null) where T : PaginationBaseResponse<TK>
+        public async Task<List<T>> GetNextPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();
             var isTrue = Uri.IsWellFormedUriString(source.Pagination.NextLink, UriKind.Absolute);
             var pageCount = 1;
+            var nextLink = source.Pagination.NextLink;
             while (isTrue && pageCount <= pages)
             {
-                var result = await GetResource<T>(source.Pagination.NextLink);
+                var result = await GetResource<T>(nextLink);
                 results.Add(result);
-                isTrue = Uri.IsWellFormedUriString(result.Pagination.NextLink, UriKind.Absolute);
+                nextLink = result.Pagination.NextLink;
+                isTrue = Uri.IsWellFormedUriString(nextLink, UriKind.Absolute);
                 pageCount++;
             }
 
             return results;
         }
 
-        public async Task<List<T>> GePreviousPages<T, TK>(T source, int? pages = null) where T : PaginationBaseResponse<TK>
+        public async Task<List<T>> GetPreviousPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();
             var isTrue = Uri.IsWellFormedUriString(source.Pagination.PreviousLink, UriKind.Absolute);
