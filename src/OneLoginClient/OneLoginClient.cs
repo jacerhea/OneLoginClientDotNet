@@ -227,6 +227,7 @@ namespace OneLogin
             return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
         }
 
+
         public async Task<List<T>> GetNextPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();

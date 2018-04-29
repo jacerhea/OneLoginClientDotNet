@@ -10,12 +10,23 @@ namespace OneLogin.Responses
 
     public class AvailableAuthenticationContainer
     {
-        public List<AuthenticationFactor> auth_factors { get; set; }
+        public List<AvailableAuthenticationFactor> auth_factors { get; set; }
     }
 
-    public class AuthenticationFactor
+    public class AvailableAuthenticationFactor
     {
+        /// <summary>
+        /// "Official" authentication factor name, as it appears to administrators in OneLogin.
+        /// </summary>
+        /// <value>The name.</value>
+        [DataMember(Name ="name")]
         public string Name { get; set; }
-        public int factor_id { get; set; }
+
+        /// <summary>
+        /// Identifier for the factor which will be used for user enrollmen
+        /// </summary>
+        /// <value>The factor identifier.</value>
+        [DataMember(Name = "factor_id")]
+        public int FactorId { get; set; }
     }
 }
