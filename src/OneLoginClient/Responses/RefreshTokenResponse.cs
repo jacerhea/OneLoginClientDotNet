@@ -4,7 +4,7 @@ using OneLogin.Descriptors;
 namespace OneLogin.Responses
 {
     [SourceDocumentation("https://developers.onelogin.com/api-docs/1/oauth20-tokens/refresh-tokens")]
-    public class RefreshTokenResponse : BaseResponse<Token>
+    public class RefreshTokenResponse : BaseResponse<RefreshedToken>
     {
     }
 

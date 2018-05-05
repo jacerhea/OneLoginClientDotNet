@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneLoginClient", "OneLoginClient\OneLoginClient.csproj", "{B0349224-9379-48E5-99FE-AA982B1DD88A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneLoginClient.IntegrationTests", "OneLoginClient.IntegrationTests\OneLoginClient.IntegrationTests.csproj", "{BEF940A5-B8CB-4120-B8BE-50C3CE3D4BCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneLoginClient.IntegrationTests", "OneLoginClient.IntegrationTests\OneLoginClient.IntegrationTests.csproj", "{BEF940A5-B8CB-4120-B8BE-50C3CE3D4BCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

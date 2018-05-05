@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using OneLogin.Responses;
 
@@ -20,9 +21,9 @@ namespace OneLogin
 
         public static string InterpolateEvent(this Event @event, List<EventType> eventTypes){
             var eventType = eventTypes.Single(et => et.id == @event.event_type_id);
-            var x = Regex.Matches(eventType.description, @"%\w+%|%\w+(\s\w+)*%");
+            var x = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
 
-            var result = @eventType.description;
+            var result = @eventType.Description;
             var properties = @event.GetType().GetProperties()
                                    .ToDictionary(prop => prop.Name);
 
