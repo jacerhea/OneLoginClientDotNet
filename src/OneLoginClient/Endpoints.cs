@@ -10,5 +10,7 @@
         public const string ONELOGIN_USERS = "users";
         public const string ONELOGIN_GROUPS = "groups";
         public const string ONELOGIN_EVENTS = "events";
+        public const string ONELOGIN_INVITES = "invites";
+        public const string ONELOGIN_ROLES = "roles";
     }
 }

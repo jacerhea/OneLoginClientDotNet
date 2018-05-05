@@ -1,11 +1,15 @@
-﻿using OneLogin.Descriptors;
+﻿using System.Runtime.Serialization;
+using OneLogin.Descriptors;
 
 namespace OneLogin.Requests
 {
     [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/create-user")]
+    [DataContract]
     public class CreateUserRequest
     {
-        public string email { get; set; }
+        [DataMember(Name = "email")]
+        public string Email { get; set; }
+
         public string username { get; set; }
         public string title { get; set; }
         public string firstname { get; set; }

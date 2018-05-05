@@ -1,5 +1,4 @@
-﻿using System;
-namespace OneLogin.Requests
+﻿namespace OneLogin.Requests
 {
     public class EnrollAnAuthenticationFactorRequest
     {

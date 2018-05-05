@@ -125,7 +125,7 @@ namespace OneLogin
         }
 
         /// <summary>
-        /// 
+        /// Use to get a list of groups that are available in your account. The call returns up to 50 groups per page.
         /// </summary>
         /// <returns></returns>
         public async Task<GetGroupsResponse> GetGroups()
@@ -136,6 +136,7 @@ namespace OneLogin
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id">Set to the group’s ID with .xml appended. For example, 123456.xml. If you don’t know the group’s id, use the Get all groups API call to return all groups and their id values.</param>
         /// <returns></returns>
         //todo: onelogin documentation is wrong.
         public async Task<GetGroupsResponse> GetGroup(int id)
@@ -143,11 +144,39 @@ namespace OneLogin
             return await GetResource<GetGroupsResponse>($"{Endpoints.ONELOGIN_GROUPS}/{id}");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<GetRolesForUser> GetRolesForUser(int id)
         {
             return await GetResource<GetRolesForUser>($"{Endpoints.ONELOGIN_USERS}/{id}/roles");
         }
 
+        /// <summary>
+        /// Use this call to get a role by ID.
+        /// </summary>
+        /// <param name="id">Set to the id of the role that you want to return. If you don’t know the role’s  id, use the Get Roles API call to return all roles and their id values.</param>
+        /// <returns></returns>
+        public async Task<GetRoleResponse> GetRoles(int id)
+        {
+            return await GetResource<GetRoleResponse>($"{Endpoints.ONELOGIN_ROLES}/{id}");
+        }
+
+        /// <summary>
+        /// This call returns up to 50 roles per page.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<GetRolesResponse> GetRoles()
+        {
+            return await GetResource<GetRolesResponse>($"{Endpoints.ONELOGIN_ROLES}");
+        }
+
+        /// <summary>
+        /// This call returns a list of all OneLogin event types available to the Events API, providing event type names, event type IDs, and descriptions.
+        /// </summary>
+        /// <returns></returns>
         public async Task<GetEventTypesResponse> GetEventTypes()
         {
             return await GetResource<GetEventTypesResponse>($"{Endpoints.ONELOGIN_EVENTS}/types");
@@ -162,7 +191,12 @@ namespace OneLogin
             return JsonConvert.DeserializeObject<GetEventsResponse>(responseBody);
         }
 
-        public async Task<GetEventsResponse> GetEvents(long id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Set to the id of the event that you want to return. If you don’t know the event’s  id, use the Get Events API call to return all events and their id values.</param>
+        /// <returns></returns>
+        public async Task<GetEventsResponse> GetEventById(long id)
         {
             return await GetResource<GetEventsResponse>($"{Endpoints.ONELOGIN_EVENTS}/{id}");
         }
@@ -217,14 +251,67 @@ namespace OneLogin
             return await GetResponse<GetUsersResponse>(response);
         }
 
-        public async Task<GetAvailableAuthenticationFactorsResponse> GetAvailableAuthenticationFactors(int id)
+        /// <summary>
+        /// Use this API to return a list of authentication factors that are available for user enrollment via API.
+        /// </summary>
+        /// <param name="userId">Set to the id of the user.</param>
+        /// <returns></returns>
+        public async Task<GetAvailableAuthenticationFactorsResponse> GetAvailableAuthenticationFactors(int userId)
         {
-            return await GetResource<GetAvailableAuthenticationFactorsResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
+            return await GetResource<GetAvailableAuthenticationFactorsResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/auth_factors");
+        }
+
+        /// <summary>
+        /// Use this API to enroll a user with a given authentication factor.
+        /// If the authentication factor requires confirmation to complete, then the device will have an active state of false otherwise it will have an active state of true (corresponding to devices that are either pending confirmation or not)
+        /// To change the active state of the device to true, the OTP device’s id would need to be supplied to the Activate a Factor endpoint.Then the `otp_code` would need to be sent to the Verify a Factor endpoint.
+        /// </summary>
+        /// <param name="userId">Set to the id of the user.</param>
+        /// <param name="factorId">The identifier of the factor to enroll the user with.</param>
+        /// <param name="displayName">A name for the users device</param>
+        /// <param name="number">The phone number of the user in E.164 format.</param>
+        /// <returns></returns>
+        public async Task<EnrollAnAuthenticationFactorResponse> EnrollAnAuthenticationFactor(int userId, int factorId, string displayName, string number)
+        {
+            var request = new EnrollAnAuthenticationFactorRequest{factor_id = factorId, display_name = displayName, number = number };
+            return await PostResource<EnrollAnAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/otp_devices", request);
         }
 
         public async Task<GetEnrolledAuthenticationFactorResponse> GetEnrolledAuthenticationFactors(int id)
         {
             return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
+        }
+
+        /// <summary>
+        /// Generate an invite link for a user that you have already created in your OneLogin account.
+        /// </summary>
+        /// <param name="email">Set to the email address of the user that you want to generate an invite link for.</param>
+        /// <returns>Provide the link to the user to enable her to set her password and then access your OneLogin portal.</returns>
+        public async Task<GenerateInviteLinkResponse> GenerateInviteLink(string email)
+        {
+            return await PostResource<GenerateInviteLinkResponse>($"{Endpoints.ONELOGIN_INVITES}/get_invite_link", new GenerateInviteLinkRequest { Email = email });
+        }
+
+        /// <summary>
+        /// Send an invite link to a user that you have already created in your OneLogin account.
+        /// </summary>
+        /// <param name="email">Set to the email address of the user that you want to generate an invite link for.</param>
+        /// <param name="personalEmail">If you want to send the invite email to an email other than the one provided in  email, provide it here. The invite link will be sent to this address instead.</param>
+        /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
+        public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
+        {
+            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail});
+        }
+
+        /// <summary>
+        /// Use to create an event in the OneLogin event log.
+        /// From individual user actions, to administrative operations, provisioning, and OTP device registration, everything that happens within your OneLogin account can be tracked.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public async Task<EmptyResponse> CreateEvent(CreateEventRequest message)
+        {
+            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_EVENTS}/send_invite_link", message);
         }
 
 
@@ -266,6 +353,25 @@ namespace OneLogin
         {
             var client = await GetClient();
             return await GetResponse<T>(client.GetAsync(url));
+        }
+
+        private async Task<T> PostResource<T>(string url, object request)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(request));
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(url),
+                Content = content
+            };
+
+            // We add the Content-Type Header like this because otherwise dotnet
+            // adds the utf-8 charset extension to it which is not compatible with OneLogin
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var client = await GetClient();
+            var response = client.SendAsync(httpRequest);
+            return await GetResponse<T>(response);
         }
 
         private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)

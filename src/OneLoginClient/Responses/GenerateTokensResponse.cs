@@ -7,6 +7,7 @@ namespace OneLogin.Responses
     /// Serialized response to generating a token.
     /// <a href="https://developers.onelogin.com/api-docs/1/oauth20-tokens/generate-tokens">Documentation</a>
     /// </summary>
+    [DataContract]
     public class GenerateTokensResponse : BaseResponse<Token>
     {
     }

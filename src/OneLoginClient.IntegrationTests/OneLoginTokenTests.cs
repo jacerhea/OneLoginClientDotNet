@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using OneLogin.Responses;
 using Xunit;
 
 namespace OneLogin.IntegrationTests
@@ -36,88 +34,94 @@ namespace OneLogin.IntegrationTests
         [Fact]
         public async Task GetTokenTest()
         {
-            var token = (await _oneLoginClient.GenerateTokens())
+            var token = (await OneLoginClient.GenerateTokens())
                 .EnsureSuccess();
+
+            token.Data.Should().ContainSingle();
         }
 
         [Fact]
         public async Task GetUsersTest()
         {
-            var usersResponse = (await _oneLoginClient.GetUsers())
+            var usersResponse = (await OneLoginClient.GetUsers())
                 .EnsureSuccess();
+
+            usersResponse.Data.Should().HaveCountGreaterOrEqualTo(1);
         }
 
         [Fact]
         public async Task GetUserByIdTest()
         {
-            var usersResponse = (await _oneLoginClient.GetUser(32715399))
+            var usersResponse = (await OneLoginClient.GetUser(32715399))
                 .EnsureSuccess();
+
+            usersResponse.Data.Should().HaveCount(1);
         }
 
         [Fact]
         public async Task GetAppsForUserTest()
         {
-            var usersResponse = (await _oneLoginClient.GetAppsForUser(32715399))
+            var getAppsForUserResponse = (await OneLoginClient.GetAppsForUser(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetGetRolesForUserTest()
         {
-            var rolesForUser = (await _oneLoginClient.GetRolesForUser(32715399))
+            var rolesForUser = (await OneLoginClient.GetRolesForUser(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetAvailableAuthenticationFactorsTest()
         {
-            var rolesForUser = (await _oneLoginClient.GetAvailableAuthenticationFactors(32715399))
+            var rolesForUser = (await OneLoginClient.GetAvailableAuthenticationFactors(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetEnrolledAuthenticationFactors()
         {
-            var rolesForUser = (await _oneLoginClient.GetEnrolledAuthenticationFactors(32715399))
+            var rolesForUser = (await OneLoginClient.GetEnrolledAuthenticationFactors(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetGroupsTest()
         {
-            var groups = (await _oneLoginClient.GetGroups())
+            var groups = (await OneLoginClient.GetGroups())
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetGroupTest()
         {
-            var groups = (await _oneLoginClient.GetGroup(434968))
+            var groups = (await OneLoginClient.GetGroup(434968))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetEventTypesTest()
         {
-            var eventTypes = (await _oneLoginClient.GetEventTypes())
+            var eventTypes = (await OneLoginClient.GetEventTypes())
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetEventsTest()
         {
-            var eventsResponse = (await _oneLoginClient.GetEvents())
+            var eventsResponse = (await OneLoginClient.GetEvents())
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetEventsInterpolatedTest()
         {
-            var eventsResponse = (await _oneLoginClient.GetEvents())
+            var eventsResponse = (await OneLoginClient.GetEvents())
                 .EnsureSuccess();
-            var eventTypes = (await _oneLoginClient.GetEventTypes());
+            var eventTypes = (await OneLoginClient.GetEventTypes());
 
-            var tenEventPages = await _oneLoginClient.GetNextPages(eventsResponse, 20);
+            var tenEventPages = await OneLoginClient.GetNextPages(eventsResponse, 20);
 
             var results = tenEventPages
                 .SelectMany(re => re.Data)
