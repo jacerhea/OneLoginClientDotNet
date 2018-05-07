@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OneLogin.Descriptors;
 using OneLogin.Types;
 
 namespace OneLogin.Responses
@@ -12,159 +12,200 @@ namespace OneLogin.Responses
     /// For details about using the pagination element to easily “page” through users, see <a href="https://developers.onelogin.com/api-docs/1/getting-started/using-query-parameters#pagination">Pagination</a>.
     /// For details about each element in the User resource, see <a href="https://developers.onelogin.com/api-docs/1/users/user-resource">User Resource</a>.
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-users")]
+    /// <inheritdoc cref="OneLogin.Responses.PaginationBaseResponse{T}" />
     public class GetUsersResponse : PaginationBaseResponse<User>
     {
 
     }
 
-
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/user-resource")]
+    /// <summary>
+    /// A user of the Onelogin platform.
+    /// </summary>
+    [DataContract]
     public class User
     {
         /// <summary>
         /// Date and time at which the user’s status was set to 1 (active).
         /// </summary>
-        public DateTime? activated_at { get; set; }
+        [DataMember(Name = "activated_at")]
+        public DateTime? ActivatedAt { get; set; }
 
         /// <summary>
         /// Date and time at which the user was created.
         /// </summary>
-        public DateTime created_at { get; set; }
+        [DataMember(Name = "created_at")]
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// User’s email address, which he also uses to log in to OneLogin.
         /// </summary>
-        public string email { get; set; }
+        [DataMember(Name = "email")]
+        public string Email { get; set; }
 
         /// <summary>
         /// If the user’s directory is set to authenticate using a user name value, this is the value used to sign in.
         /// </summary>
-        public string username { get; set; }
+        [DataMember(Name = "username")]
+        public string UserName { get; set; }
 
         /// <summary>
         /// User’s first name.
         /// </summary>
-        public string firstname { get; set; }
+        [DataMember(Name = "firstname")]
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Group to which the user belongs.
         /// </summary>
-        public int? group_id { get; set; }
+        [DataMember(Name = "group_id")]
+        public int? GroupId { get; set; }
 
         /// <summary>
         /// User’s unique ID in OneLogin.
         /// </summary>
-        public int id { get; set; }
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
 
         /// <summary>
         /// Number of sequential invalid login attempts the user has made that is less than or equal to the Maximum invalid login attempts value defined on the Session page in OneLogin.
         /// When this number reaches this value, the user account will be locked for the amount of time defined by the Lock effective period field on the Session page and this value will be reset to 0.
         /// </summary>
-        public int? invalid_login_attempts { get; set; }
+        [DataMember(Name = "invalid_login_attempts")]
+        public int? InvalidLoginAttempts { get; set; }
 
         /// <summary>
         /// Date and time at which an invitation to OneLogin was sent to the user.
         /// </summary>
-        public DateTime? invitation_sent_at { get; set; }
+        [DataMember(Name = "invitation_sent_at")]
+        public DateTime? InvitationSentAt { get; set; }
 
         /// <summary>
         /// Date and time of the user’s last login.
         /// </summary>
-        public DateTime? last_login { get; set; }
+        [DataMember(Name = "last_login")]
+        public DateTime? LastLogin { get; set; }
 
         /// <summary>
         /// User’s last name.
         /// </summary>
-        public string lastname { get; set; }
+        [DataMember(Name = "lastname")]
+        public string LastName { get; set; }
 
         /// <summary>
         /// Date and time at which the user’s account will be unlocked.
         /// </summary>
-        public string locked_until { get; set; }
+        [DataMember(Name = "locked_until")]
+        public string LockedUntil { get; set; }
 
         /// <summary>
         /// Notes entered about the user.
         /// </summary>
-        public string comment { get; set; }
+        [DataMember(Name = "comment")]
+        public string Comment { get; set; }
 
         /// <summary>
         /// OpenID URL that can be configured in other applications that accept OpenID for sign-in.
         /// </summary>
-        public string openid_name { get; set; }
+        [DataMember(Name = "openid_name")]
+        public string OpenIdName { get; set; }
 
         /// <summary>
         /// Represents a geographical, political, or cultural region. Some features may use the locale value to tailor the display of information, such as numbers, for the user based on locale-specific customs and conventions.
         /// </summary>
-        public string locale_code { get; set; }
+        [DataMember(Name = "locale_code")]
+        public string LocaleCode { get; set; }
 
         /// <summary>
         /// Date and time at which the user’s password was last changed.
         /// </summary>
-        public DateTime? password_changed_at { get; set; }
+        [DataMember(Name = "password_changed_at")]
+        public DateTime? PasswordChangedAt { get; set; }
 
         /// <summary>
         /// User’s phone number.
         /// </summary>
-        public string phone { get; set; }
+        [DataMember(Name = "phone")]
+        public string Phone { get; set; }
 
         /// <summary>
         /// Determines the user’s ability to log in to OneLogin.
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public StatusType status { get; set; }
+        [DataMember(Name = "status")]
+        public StatusType Status { get; set; }
 
 
         /// <summary>
         /// Date and time at which the user’s information was last updated.
         /// </summary>
-        public DateTime updated_at { get; set; }
-        public string distinguished_name { get; set; }
-        public string external_id { get; set; }
-        public string directory_id { get; set; }
+        [DataMember(Name = "updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
+        [DataMember(Name = "distinguished_name")]
+        public string DistinguishedName { get; set; }
+
+        [DataMember(Name = "external_id")]
+        public string ExternalId { get; set; }
+
+        [DataMember(Name = "directory_id")]
+        public string DirectoryId { get; set; }
 
         /// <summary>
         /// Synchronized from Active Directory.
         /// </summary>
-        public string member_of { get; set; }
+        [DataMember(Name = "member_of")]
+        public string MemberOf { get; set; }
 
         /// <summary>
         /// Synchronized from Active Directory.
         /// </summary>
-        public string samaccountname { get; set; }
+        [DataMember(Name = "samaccountname")]
+        public string SamAccountName { get; set; }
 
         /// <summary>
         /// Synchronized from Active Directory.
         /// </summary>
-        public string userprincipalname { get; set; }
+        [DataMember(Name = "userprincipalname")]
+        public string UserPrincipalName { get; set; }
 
         /// <summary>
         /// ID of the user’s manager in Active Directory.
         /// </summary>
-        public string manager_ad_id { get; set; }
+        [DataMember(Name = "manager_ad_id")]
+        public string ManagerAdId { get; set; }
 
         /// <summary>
         /// Role IDs to which the user is assigned.
         /// </summary>
-        public List<int> role_id { get; set; }
-        public string company { get; set; }
-        public string department { get; set; }
-        public string title { get; set; }
+        [DataMember(Name = "role_id")]
+        public List<int> RoleId { get; set; }
+
+        [DataMember(Name = "company")]
+        public string Company { get; set; }
+
+        [DataMember(Name = "department")]
+        public string Department { get; set; }
+
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// Represents the user’s stage in a process (such as user account approval). User state determines the possible statuses a user account can be in.
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public State state { get; set; }
+        [DataMember(Name = "state")]
+        public State State { get; set; }
 
 
-        public string trusted_idp_id { get; set; }
-        public CustomAttributes custom_attributes { get; set; }
+        [DataMember(Name = "trusted_idp_id")]
+        public string TrustedIdpId { get; set; }
+
+
+        /// <summary>
+        /// Provides a list of custom attribute fields (also known as custom user fields) that are available for your account.
+        /// The values returned correspond to the values you provided in the Shortname field when you defined the custom user field.
+        /// </summary>
+        [DataMember(Name = "custom_attributes")]
+        public Dictionary<string, string> CustomAttributes { get; set; }
     }
-
-    public class CustomAttributes
-    {
-        public string alias { get; set; }
-        public string branch { get; set; }
-    }
-}
+  }

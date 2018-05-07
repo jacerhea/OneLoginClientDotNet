@@ -2,7 +2,11 @@
 
 namespace OneLogin.Responses
 {
-
+    /// <summary>
+    /// A base class for Responses that are pageable.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <inheritdoc cref="OneLogin.Responses.BaseResponse{T}" />
     [DataContract]
     public abstract class PaginationBaseResponse<T> : BaseResponse<T>, IPageable
     {
@@ -13,6 +17,9 @@ namespace OneLogin.Responses
         public Pagination Pagination { get; set; }
     }
 
+    /// <summary>
+    /// Interface for Response that are pageable.
+    /// </summary>
     public interface IPageable
     {
         /// <summary>

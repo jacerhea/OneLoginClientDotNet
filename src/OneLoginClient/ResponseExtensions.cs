@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using OneLogin.Responses;
 
@@ -13,7 +12,7 @@ namespace OneLogin
         {
             if (source.Status.Error)
             {
-                throw new Exception("Call failed.");
+                throw new Exception(source.Status.Message);
             }
 
             return source;

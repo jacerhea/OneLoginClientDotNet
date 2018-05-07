@@ -73,6 +73,13 @@ namespace OneLogin.IntegrationTests
         }
 
         [Fact]
+        public async Task GetCustomAttributes()
+        {
+            var rolesForUser = (await OneLoginClient.GetCustomAttributes())
+                .EnsureSuccess();
+        }
+
+        [Fact]
         public async Task GetAvailableAuthenticationFactorsTest()
         {
             var rolesForUser = (await OneLoginClient.GetAvailableAuthenticationFactors(32715399))

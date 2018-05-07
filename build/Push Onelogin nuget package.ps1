@@ -1,0 +1,1 @@
+dotnet nuget push ..\src\OneLoginClient\bin\Debug\OneLogin.API.1.0.0.nupkg  -s https://api.nuget.org/v3/index.json

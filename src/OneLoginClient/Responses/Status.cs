@@ -2,6 +2,9 @@
 
 namespace OneLogin.Responses
 {
+    /// <summary>
+    /// An contract for the common status schema returned from the API.
+    /// </summary>
     [DataContract]
     public class Status
     {
@@ -17,9 +20,16 @@ namespace OneLogin.Responses
         [DataMember(Name = "code")]
         public int Code { get; set; }
 
+
+        /// <summary>
+        /// The type of status.  Usually of type "success" for 200 "Ok" responses.
+        /// </summary>
         [DataMember(Name = "type")]
         public string Type { get; set; }
 
+        /// <summary>
+        /// Additional information about the response which may include why it failed or if it succeeded.
+        /// </summary>
         [DataMember(Name = "message")]
         public string Message { get; set; }
     }

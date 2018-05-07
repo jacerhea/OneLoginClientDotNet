@@ -2,13 +2,18 @@
 
 namespace OneLogin.Responses
 {
+    /// <summary>
+    /// A base class for all responses that have returnable data.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <inheritdoc cref="BaseStatusResponse" />
     [DataContract]
     public abstract class BaseResponse<T> : BaseStatusResponse
     {
         /// <summary>
         /// Collection of data returned by the API service.
         /// </summary>
-        [DataMember(Name = "Data")]
+        [DataMember(Name = "data")]
         public T[] Data { get; set; }
     }
 }
