@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 src/codealike\.json
+
+build/Push Onelogin nuget package\.ps1
