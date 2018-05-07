@@ -93,7 +93,6 @@ namespace OneLogin
         }
 
 
-
         /// <summary>
         /// Use to get a list of groups that are available in your account. The call returns up to 50 groups per page.
         /// </summary>
@@ -114,85 +113,11 @@ namespace OneLogin
             return await GetResource<GetGroupsResponse>($"{Endpoints.ONELOGIN_GROUPS}/{id}");
         }
 
-        /// <summary>
-        /// Use this call to get a role by ID.
-        /// </summary>
-        /// <param name="id">Set to the id of the role that you want to return. If you don’t know the role’s  id, use the Get Roles API call to return all roles and their id values.</param>
-        /// <returns></returns>
-        public async Task<GetRoleResponse> GetRole(int id)
-        {
-            return await GetResource<GetRoleResponse>($"{Endpoints.ONELOGIN_ROLES}/{id}");
-        }
-
-        /// <summary>
-        /// This call returns up to 50 roles per page.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<GetRolesResponse> GetRoles()
-        {
-            return await GetResource<GetRolesResponse>($"{Endpoints.ONELOGIN_ROLES}");
-        }
-
-        /// <summary>
-        /// This call returns a list of all OneLogin event types available to the Events API, providing event type names, event type IDs, and descriptions.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<GetEventTypesResponse> GetEventTypes()
-        {
-            return await GetResource<GetEventTypesResponse>($"{Endpoints.ONELOGIN_EVENTS}/types");
-        }
-
-        public async Task<GetEventsResponse> GetEvents(string clientId = null, DateTime? created_at = null, string directory_id = null,
-            int? event_type_id = null, long? id = null, string resolution = null, DateTime? since = null, DateTime? until = null, int? user_id = null)
-        {
-            var client = await GetClient();
-            var response = await client.GetAsync($"{Endpoints.ONELOGIN_EVENTS}");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetEventsResponse>(responseBody);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Set to the id of the event that you want to return. If you don’t know the event’s  id, use the Get Events API call to return all events and their id values.</param>
-        /// <returns></returns>
-        public async Task<GetEventsResponse> GetEventById(long id)
-        {
-            return await GetResource<GetEventsResponse>($"{Endpoints.ONELOGIN_EVENTS}/{id}");
-        }
 
 
 
-        /// <summary>
-        /// Use this API to return a list of authentication factors that are available for user enrollment via API.
-        /// </summary>
-        /// <param name="userId">Set to the id of the user.</param>
-        /// <returns></returns>
-        public async Task<GetAvailableAuthenticationFactorsResponse> GetAvailableAuthenticationFactors(int userId)
-        {
-            return await GetResource<GetAvailableAuthenticationFactorsResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/auth_factors");
-        }
 
-        /// <summary>
-        /// Use this API to enroll a user with a given authentication factor.
-        /// If the authentication factor requires confirmation to complete, then the device will have an active state of false otherwise it will have an active state of true (corresponding to devices that are either pending confirmation or not)
-        /// To change the active state of the device to true, the OTP device’s id would need to be supplied to the Activate a Factor endpoint.Then the `otp_code` would need to be sent to the Verify a Factor endpoint.
-        /// </summary>
-        /// <param name="userId">Set to the id of the user.</param>
-        /// <param name="factorId">The identifier of the factor to enroll the user with.</param>
-        /// <param name="displayName">A name for the users device</param>
-        /// <param name="number">The phone number of the user in E.164 format.</param>
-        /// <returns></returns>
-        public async Task<EnrollAnAuthenticationFactorResponse> EnrollAnAuthenticationFactor(int userId, int factorId, string displayName, string number)
-        {
-            var request = new EnrollAnAuthenticationFactorRequest{factor_id = factorId, display_name = displayName, number = number };
-            return await PostResource<EnrollAnAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/otp_devices", request);
-        }
 
-        public async Task<GetEnrolledAuthenticationFactorResponse> GetEnrolledAuthenticationFactors(int id)
-        {
-            return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{id}/auth_factors");
-        }
 
         /// <summary>
         /// Send an invite link to a user that you have already created in your OneLogin account.
@@ -203,17 +128,6 @@ namespace OneLogin
         public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
         {
             return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail});
-        }
-
-        /// <summary>
-        /// Use to create an event in the OneLogin event log.
-        /// From individual user actions, to administrative operations, provisioning, and OTP device registration, everything that happens within your OneLogin account can be tracked.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public async Task<EmptyResponse> CreateEvent(CreateEventRequest message)
-        {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_EVENTS}/send_invite_link", message);
         }
 
 
