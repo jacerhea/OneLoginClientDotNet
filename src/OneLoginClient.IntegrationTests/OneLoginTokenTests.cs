@@ -50,6 +50,14 @@ namespace OneLogin.IntegrationTests
         }
 
         [Fact]
+        public async Task GetUserByEmail()
+        {
+            var usersResponse = (await OneLoginClient.GetUsers(email:"jrhea@performancetrust.com"))
+                .EnsureSuccess();
+            usersResponse.Data.Should().HaveCount(1);
+        }
+
+        [Fact]
         public async Task GetUserByIdTest()
         {
             var usersResponse = (await OneLoginClient.GetUser(32715399))
@@ -128,7 +136,7 @@ namespace OneLogin.IntegrationTests
                 .EnsureSuccess();
             var eventTypes = (await OneLoginClient.GetEventTypes());
 
-            var tenEventPages = await OneLoginClient.GetNextPages(eventsResponse, 20);
+            var tenEventPages = await OneLoginClient.GetNextPages(eventsResponse, null);
 
             var results = tenEventPages
                 .SelectMany(re => re.Data)

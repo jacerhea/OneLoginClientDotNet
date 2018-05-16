@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace OneLogin.Responses
 {
@@ -14,6 +15,6 @@ namespace OneLogin.Responses
         /// Collection of data returned by the API service.
         /// </summary>
         [DataMember(Name = "data")]
-        public T[] Data { get; set; }
+        public List<T> Data { get; set; }
     }
 }
