@@ -89,7 +89,7 @@ namespace OneLogin
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = client.SendAsync(request);
-            return await GetResponse<GenerateTokensResponse>(response);
+            return await ParseHttpResponse<GenerateTokensResponse>(response);
         }
 
 
@@ -144,16 +144,9 @@ namespace OneLogin
         private async Task<T> GetResource<T>(string url)
         {
             var client = await GetClient();
-            return await GetResponse<T>(client.GetAsync(url));
+            return await ParseHttpResponse<T>(client.GetAsync(url));
         }
 
-
-        private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)
-        {
-            var response = await taskResponse;
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(responseBody);
-        }
 
         private async Task<T> PostResource<T>(string url, object request)
         {
@@ -171,7 +164,7 @@ namespace OneLogin
 
             var client = await GetClient();
             var response = client.SendAsync(httpRequest);
-            return await GetResponse<T>(response);
+            return await ParseHttpResponse<T>(response);
         }
 
 
@@ -191,7 +184,20 @@ namespace OneLogin
 
             var client = await GetClient();
             var response = client.SendAsync(httpRequest);
-            return await GetResponse<T>(response);
+            return await ParseHttpResponse<T>(response);
+        }
+
+        private async Task<T> DeleteResource<T>(string url)
+        {
+            var client = await GetClient();
+            return await ParseHttpResponse<T>(client.DeleteAsync(url));
+        }
+
+        private async Task<T> ParseHttpResponse<T>(Task<HttpResponseMessage> taskResponse)
+        {
+            var response = await taskResponse;
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(responseBody);
         }
     }
 }
