@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace OneLogin.Responses
 {
     /// <summary>
-    /// The event response.
+    /// The response with a set of events.
     /// </summary>
     [DataContract]
     public class GetEventsResponse : PaginationBaseResponse<Event>

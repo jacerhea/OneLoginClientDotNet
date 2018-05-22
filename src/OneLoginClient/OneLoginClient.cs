@@ -93,30 +93,6 @@ namespace OneLogin
         }
 
 
-        /// <summary>
-        /// Use to get a list of groups that are available in your account. The call returns up to 50 groups per page.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<GetGroupsResponse> GetGroups()
-        {
-            return await GetResource<GetGroupsResponse>(Endpoints.ONELOGIN_GROUPS);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Set to the group’s ID with .xml appended. For example, 123456.xml. If you don’t know the group’s id, use the Get all groups API call to return all groups and their id values.</param>
-        /// <returns></returns>
-        //todo: onelogin documentation is wrong.
-        public async Task<GetGroupsResponse> GetGroup(int id)
-        {
-            return await GetResource<GetGroupsResponse>($"{Endpoints.ONELOGIN_GROUPS}/{id}");
-        }
-
-
-
-
-
 
 
         /// <summary>
@@ -171,6 +147,14 @@ namespace OneLogin
             return await GetResponse<T>(client.GetAsync(url));
         }
 
+
+        private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)
+        {
+            var response = await taskResponse;
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(responseBody);
+        }
+
         private async Task<T> PostResource<T>(string url, object request)
         {
             var content = new StringContent(JsonConvert.SerializeObject(request));
@@ -190,11 +174,24 @@ namespace OneLogin
             return await GetResponse<T>(response);
         }
 
-        private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)
+
+        private async Task<T> PutResource<T>(string url, object request)
         {
-            var response = await taskResponse;
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(responseBody);
+            var content = new StringContent(JsonConvert.SerializeObject(request));
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri(url),
+                Content = content
+            };
+
+            // We add the Content-Type Header like this because otherwise dotnet
+            // adds the utf-8 charset extension to it which is not compatible with OneLogin
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var client = await GetClient();
+            var response = client.SendAsync(httpRequest);
+            return await GetResponse<T>(response);
         }
     }
 }

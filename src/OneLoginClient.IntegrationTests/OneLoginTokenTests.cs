@@ -52,7 +52,7 @@ namespace OneLogin.IntegrationTests
         [Fact]
         public async Task GetUserByIdTest()
         {
-            var usersResponse = (await OneLoginClient.GetUser(32715399))
+            var usersResponse = (await OneLoginClient.GetUserById(32715399))
                 .EnsureSuccess();
 
             usersResponse.Data.Should().HaveCount(1);

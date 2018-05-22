@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace OneLogin.Responses
 {
+    /// <summary>
+    /// Use this API to return a list of authentication factors that are available for user enrollment via API.
+    /// </summary>
     [DataContract]
     public class GetAvailableAuthenticationFactorsResponse : BaseStatusResponse
     {
@@ -11,6 +14,9 @@ namespace OneLogin.Responses
     }
 
 
+    /// <summary>
+    /// Wrapper object for getting the list of authentication factors.
+    /// </summary>
     [DataContract]
     public class AvailableAuthenticationContainer
     {
