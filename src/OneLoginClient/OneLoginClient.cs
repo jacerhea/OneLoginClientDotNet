@@ -103,7 +103,7 @@ namespace OneLogin
         /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
         public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
         {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail});
+            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail });
         }
 
 
@@ -143,6 +143,7 @@ namespace OneLogin
 
         private async Task<T> GetResource<T>(string url)
         {
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.GetAsync(url));
         }
@@ -150,6 +151,8 @@ namespace OneLogin
 
         private async Task<T> PostResource<T>(string url, object request)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
@@ -170,6 +173,8 @@ namespace OneLogin
 
         private async Task<T> PutResource<T>(string url, object request)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
@@ -189,6 +194,7 @@ namespace OneLogin
 
         private async Task<T> DeleteResource<T>(string url)
         {
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.DeleteAsync(url));
         }
