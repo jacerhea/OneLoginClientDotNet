@@ -24,7 +24,7 @@ namespace OneLogin.Requests
         /// 
         /// </summary>
         [DataMember(Name = "actor_system")]
-        public int ActorSystem { get; set; }
+        public string ActorSystem { get; set; }
 
         /// <summary>
         /// Value must exist in OneLogin.
@@ -33,7 +33,7 @@ namespace OneLogin.Requests
         public string ActorUserId { get; set; }
 
         [DataMember(Name = "app_id")]
-        public string AppId { get; set; }
+        public long AppId { get; set; }
 
         [DataMember(Name = "assuming_acting_user_id")]
         public string AssumingActingUserId { get; set; }
@@ -54,10 +54,10 @@ namespace OneLogin.Requests
         public string IpAddress { get; set; }
 
         [DataMember(Name = "otp_device_id")]
-        public string otp_device_id { get; set; }
+        public string OtpDeviceId { get; set; }
 
         [DataMember(Name = "otp_device_name")]
-        public string otp_device_name { get; set; }
+        public string OtpDeviceName { get; set; }
 
         [DataMember(Name = "policy_id")]
         public string PolicyId { get; set; }
@@ -72,7 +72,7 @@ namespace OneLogin.Requests
         public string RoleName { get; set; }
 
         [DataMember(Name = "user_id")]
-        public string UserId { get; set; }
+        public long UserId { get; set; }
 
         [DataMember(Name = "user_name")]
         public string UserName { get; set; }

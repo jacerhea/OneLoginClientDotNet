@@ -9,7 +9,7 @@ namespace OneLogin.Responses
     public class BaseStatusResponse
     {
         /// <summary>
-        /// A common status returned for all API calls.
+        /// The status of the request.
         /// </summary>
         [DataMember(Name = "status")]
         public Status Status { get; set; }

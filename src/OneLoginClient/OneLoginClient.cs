@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OneLogin.Descriptors;
-using OneLogin.Requests;
 using OneLogin.Responses;
 
 namespace OneLogin
@@ -93,20 +92,6 @@ namespace OneLogin
         }
 
 
-
-
-        /// <summary>
-        /// Send an invite link to a user that you have already created in your OneLogin account.
-        /// </summary>
-        /// <param name="email">Set to the email address of the user that you want to generate an invite link for.</param>
-        /// <param name="personalEmail">If you want to send the invite email to an email other than the one provided in  email, provide it here. The invite link will be sent to this address instead.</param>
-        /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
-        public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
-        {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail });
-        }
-
-
         public async Task<List<T>> GetNextPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();
@@ -157,7 +142,7 @@ namespace OneLogin
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(url),
+                RequestUri = new Uri(url, UriKind.Relative),
                 Content = content
             };
 
@@ -203,6 +188,10 @@ namespace OneLogin
         {
             var response = await taskResponse;
             var responseBody = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(responseBody))
+            {
+                throw new JsonSerializationException("No message to deserialize.");
+            }
             return JsonConvert.DeserializeObject<T>(responseBody);
         }
     }

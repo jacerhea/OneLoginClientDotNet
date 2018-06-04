@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
@@ -105,35 +104,6 @@ namespace OneLogin.IntegrationTests
         {
             var groups = (await OneLoginClient.GetGroup(434968))
                 .EnsureSuccess();
-        }
-
-        [Fact]
-        public async Task GetEventTypesTest()
-        {
-            var eventTypes = (await OneLoginClient.GetEventTypes())
-                .EnsureSuccess();
-        }
-
-        [Fact]
-        public async Task GetEventsTest()
-        {
-            var eventsResponse = (await OneLoginClient.GetEvents())
-                .EnsureSuccess();
-        }
-
-        [Fact]
-        public async Task GetEventsInterpolatedTest()
-        {
-            var eventsResponse = (await OneLoginClient.GetEvents())
-                .EnsureSuccess();
-            var eventTypes = (await OneLoginClient.GetEventTypes());
-
-            var tenEventPages = await OneLoginClient.GetNextPages(eventsResponse, 20);
-
-            var results = tenEventPages
-                .SelectMany(re => re.Data)
-                .Select(d => d.InterpolateEvent(eventTypes.Data.ToList()))
-                .ToList();
         }
     }
 }
