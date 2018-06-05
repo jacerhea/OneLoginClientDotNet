@@ -7,6 +7,9 @@ namespace OneLogin.Responses
     {
     }
 
+    /// <summary>
+    /// Think of groups as departments. Groups enable you to split your user base into smaller pieces that can be more easily managed.
+    /// </summary>
     [DataContract]
     public class Group
     {

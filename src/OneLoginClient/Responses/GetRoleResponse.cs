@@ -2,17 +2,26 @@
 
 namespace OneLogin.Responses
 {
+    /// <summary>
+    /// Response message the requested role.
+    /// </summary>
     [DataContract]
     public class GetRoleResponse : BaseResponse<Role>
     {
     }
 
+    /// <summary>
+    /// Response message containing the set of requested roles.
+    /// </summary>
     [DataContract]
     public class GetRolesResponse : PaginationBaseResponse<Role>
     {
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     [DataContract]
     public class Role
     {

@@ -19,7 +19,7 @@ namespace OneLogin
         }
 
         public static string InterpolateEvent(this Event @event, List<EventType> eventTypes){
-            var eventType = eventTypes.Single(et => et.id == @event.event_type_id);
+            var eventType = eventTypes.Single(et => et.Id == @event.EventTypeId);
             var x = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
 
             var result = @eventType.Description;

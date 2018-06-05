@@ -1,4 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using OneLogin.Converters;
 
 namespace OneLogin.Responses
 {
@@ -30,6 +33,8 @@ namespace OneLogin.Responses
         /// <summary>
         /// Additional information about the response which may include why it failed or if it succeeded.
         /// </summary>
+        ///
+        [JsonConverter(typeof(JsonConverterObjectToString))]
         [DataMember(Name = "message")]
         public string Message { get; set; }
     }

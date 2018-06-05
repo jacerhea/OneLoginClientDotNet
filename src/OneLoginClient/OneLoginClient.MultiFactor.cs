@@ -36,11 +36,48 @@ namespace OneLogin
         /// Use this API to return a list of authentication factors registered to a particular user for multifactor authentication (MFA). The list includes devices that are enabled (used successfully for authentication at least once) or pending enablement (registered but never used).
         /// This API is typically used in a login workflow in which MFA is required, providing the user a selection of their registered MFA devices to choose from. The returned list represents the authentication factors that have been registered by the user on their Profile page or on the OneLogin login page or custom login page.
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Set to the id of the user.</param>
         /// <returns>Returns the serialized <see cref="GetEnrolledAuthenticationFactorResponse"/> as an asynchronous operation.</returns>
         public async Task<GetEnrolledAuthenticationFactorResponse> GetEnrolledAuthenticationFactors(int userId)
         {
             return await GetResource<GetEnrolledAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/auth_factors");
+        }
+
+        /// <summary>
+        /// Use this API to return a list of authentication factors registered to a particular user for multifactor authentication (MFA). The list includes devices that are enabled (used successfully for authentication at least once) or pending enablement (registered but never used).
+        /// This API is typically used in a login workflow in which MFA is required, providing the user a selection of their registered MFA devices to choose from. The returned list represents the authentication factors that have been registered by the user on their Profile page or on the OneLogin login page or custom login page.
+        /// </summary>
+        /// <param name="userId">Set to the id of the user.</param>
+        /// <param name="deviceId">Set to the device_id of the MFA device.</param>
+        /// <returns>Returns the serialized <see cref="GetEnrolledAuthenticationFactorResponse"/> as an asynchronous operation.</returns>
+        public async Task<ActivateAnAuthenticationFactorResponse> ActivateAnAuthenticationFactor(int userId, int deviceId)
+        {
+            return await PostResource<ActivateAnAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/otp_devices{deviceId}/trigger", new {});
+        }
+
+        /// <summary>
+        /// Use this API to authenticate a one-time password (OTP) code provided by a multifactor authentication (MFA) device.
+        /// If this is the first time that the OTP device has been confirmed, then the device will be updated to have a state of enabled.
+        /// </summary>
+        /// <param name="userId">Set to the id of the user.</param>
+        /// <param name="deviceId">Set to the device_id of the MFA device.</param>
+        /// <param name="request"></param>
+        /// <returns>Returns the serialized <see cref="GetEnrolledAuthenticationFactorResponse"/> as an asynchronous operation.</returns>
+        public async Task<ActivateAnAuthenticationFactorResponse> VerifyAnAuthenticationFactor(int userId, int deviceId, VerifyAnAuthenticationFactorRequest request)
+        {
+            return await PostResource<ActivateAnAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/otp_devices{deviceId}/verify", request);
+        }
+
+        /// <summary>
+        /// Use this API to authenticate a one-time password (OTP) code provided by a multifactor authentication (MFA) device.
+        /// If this is the first time that the OTP device has been confirmed, then the device will be updated to have a state of enabled.
+        /// </summary>
+        /// <param name="userId">Set to the id of the user.</param>
+        /// <param name="deviceId">Set to the device_id of the MFA device.</param>
+        /// <returns>Returns the serialized <see cref="GetEnrolledAuthenticationFactorResponse"/> as an asynchronous operation.</returns>
+        public async Task<ActivateAnAuthenticationFactorResponse> RemoveAFactor(int userId, int deviceId)
+        {
+            return await DeleteResource<ActivateAnAuthenticationFactorResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/otp_devices{deviceId}");
         }
     }
 }

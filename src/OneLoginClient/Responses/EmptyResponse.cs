@@ -6,12 +6,7 @@ namespace OneLogin.Responses
     /// Response message containing the status of the request.
     /// </summary>
     [DataContract]
-    public class EmptyResponse
+    public class EmptyResponse : BaseStatusResponse
     {
-        /// <summary>
-        /// The status of the request.
-        /// </summary>
-        [DataMember(Name = "status")]
-        public Status Status { get; set; }
     }
 }

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OneLogin.Descriptors;
-using OneLogin.Requests;
 using OneLogin.Responses;
 
 namespace OneLogin
@@ -89,45 +88,7 @@ namespace OneLogin
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = client.SendAsync(request);
-            return await GetResponse<GenerateTokensResponse>(response);
-        }
-
-
-        /// <summary>
-        /// Use to get a list of groups that are available in your account. The call returns up to 50 groups per page.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<GetGroupsResponse> GetGroups()
-        {
-            return await GetResource<GetGroupsResponse>(Endpoints.ONELOGIN_GROUPS);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Set to the group’s ID with .xml appended. For example, 123456.xml. If you don’t know the group’s id, use the Get all groups API call to return all groups and their id values.</param>
-        /// <returns></returns>
-        //todo: onelogin documentation is wrong.
-        public async Task<GetGroupsResponse> GetGroup(int id)
-        {
-            return await GetResource<GetGroupsResponse>($"{Endpoints.ONELOGIN_GROUPS}/{id}");
-        }
-
-
-
-
-
-
-
-        /// <summary>
-        /// Send an invite link to a user that you have already created in your OneLogin account.
-        /// </summary>
-        /// <param name="email">Set to the email address of the user that you want to generate an invite link for.</param>
-        /// <param name="personalEmail">If you want to send the invite email to an email other than the one provided in  email, provide it here. The invite link will be sent to this address instead.</param>
-        /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
-        public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
-        {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail});
+            return await ParseHttpResponse<GenerateTokensResponse>(response);
         }
 
 
@@ -167,16 +128,42 @@ namespace OneLogin
 
         private async Task<T> GetResource<T>(string url)
         {
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var client = await GetClient();
-            return await GetResponse<T>(client.GetAsync(url));
+            return await ParseHttpResponse<T>(client.GetAsync(url));
         }
+
 
         private async Task<T> PostResource<T>(string url, object request)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
+                RequestUri = new Uri(url, UriKind.Relative),
+                Content = content
+            };
+
+            // We add the Content-Type Header like this because otherwise dotnet
+            // adds the utf-8 charset extension to it which is not compatible with OneLogin
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var client = await GetClient();
+            var response = client.SendAsync(httpRequest);
+            return await ParseHttpResponse<T>(response);
+        }
+
+
+        private async Task<T> PutResource<T>(string url, object request)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+            var content = new StringContent(JsonConvert.SerializeObject(request));
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Put,
                 RequestUri = new Uri(url),
                 Content = content
             };
@@ -187,13 +174,24 @@ namespace OneLogin
 
             var client = await GetClient();
             var response = client.SendAsync(httpRequest);
-            return await GetResponse<T>(response);
+            return await ParseHttpResponse<T>(response);
         }
 
-        private async Task<T> GetResponse<T>(Task<HttpResponseMessage> taskResponse)
+        private async Task<T> DeleteResource<T>(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+            var client = await GetClient();
+            return await ParseHttpResponse<T>(client.DeleteAsync(url));
+        }
+
+        private async Task<T> ParseHttpResponse<T>(Task<HttpResponseMessage> taskResponse)
         {
             var response = await taskResponse;
             var responseBody = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(responseBody))
+            {
+                throw new JsonSerializationException("No message to deserialize.");
+            }
             return JsonConvert.DeserializeObject<T>(responseBody);
         }
     }
