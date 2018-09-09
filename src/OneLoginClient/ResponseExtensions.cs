@@ -19,15 +19,15 @@ namespace OneLogin
         }
 
         public static string InterpolateEvent(this Event @event, List<EventType> eventTypes){
-            var eventType = eventTypes.Single(et => et.Id == @event.EventTypeId);
-            var x = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
+            var eventType = eventTypes.Single(et => et.id == @event.event_type_id);
+            var matches = Regex.Matches(eventType.description, @"%\w+%|%\w+(\s\w+)*%");
 
             var result = @eventType.Description;
             var properties = @event.GetType().GetProperties()
                                    .ToDictionary(prop => prop.Name);
 
-            foreach(var y in x.Cast<Match>().Where(mn => mn.Success)){
-                var matchValue = y.Value.Replace("%", string.Empty);
+            foreach(var match in matches.Cast<Match>().Where(mn => mn.Success)){
+                var matchValue = match.Value.Replace("%", string.Empty);
 
                 if (matchValue == "note" && properties.ContainsKey("notes"))
                 {
@@ -42,7 +42,7 @@ namespace OneLogin
                     var property = properties[matchValue];
                     var propertyValue = property.GetValue(@event).ToString();
 
-                    result = result.Replace(y.Value, propertyValue);
+                    result = result.Replace(match.Value, propertyValue);
                     continue;
                 }
 
@@ -52,7 +52,7 @@ namespace OneLogin
                     var property = properties[propertyName];
                     var propertyValue = property.GetValue(@event).ToString();
 
-                    result = result.Replace(y.Value, propertyValue);
+                    result = result.Replace(match.Value, propertyValue);
                     continue;
                 }
       

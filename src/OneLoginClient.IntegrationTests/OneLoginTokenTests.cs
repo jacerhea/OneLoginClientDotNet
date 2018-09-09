@@ -7,7 +7,7 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginTokenTests
     {
-        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret")
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret");
 
         [Fact]
         public void Empty_ClientId_Throws_An_Exception_In_OneLoginClient()
