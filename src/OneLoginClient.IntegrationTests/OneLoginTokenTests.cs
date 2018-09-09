@@ -7,7 +7,7 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginTokenTests
     {
-        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret")
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("1e6c17c7ce20cc7a1faa070819555437fcdfcea1a7aa2ba355d49120fb979072", "a3ef28579190690be34df472064a145a640a1dd2cbf9a4c485cc40731dcd9ab6");
 
         [Fact]
         public void Empty_ClientId_Throws_An_Exception_In_OneLoginClient()
@@ -33,84 +33,46 @@ namespace OneLogin.IntegrationTests
         [Fact]
         public async Task GetTokenTest()
         {
-            var token = (await OneLoginClient.GenerateTokens())
+            var token = (await _oneLoginClient.GenerateTokens())
                 .EnsureSuccess();
 
             token.Data.Should().ContainSingle();
         }
 
-        [Fact]
-        public async Task GetUsersTest()
-        {
-            var usersResponse = (await OneLoginClient.GetUsers())
-                .EnsureSuccess();
-
-            usersResponse.Data.Should().HaveCountGreaterOrEqualTo(1);
-        }
-
-        [Fact]
-        public async Task GetUserByEmail()
-        {
-            var usersResponse = (await OneLoginClient.GetUsers(email:"jrhea@performancetrust.com"))
-                .EnsureSuccess();
-            usersResponse.Data.Should().HaveCount(1);
-        }
-
-        [Fact]
-        public async Task GetUserByIdTest()
-        {
-            var usersResponse = (await OneLoginClient.GetUserById(32715399))
-                .EnsureSuccess();
-
-            usersResponse.Data.Should().HaveCount(1);
-        }
-
-        [Fact]
-        public async Task GetAppsForUserTest()
-        {
-            var getAppsForUserResponse = (await OneLoginClient.GetAppsForUser(32715399))
-                .EnsureSuccess();
-        }
-
-        [Fact]
-        public async Task GetGetRolesForUserTest()
-        {
-            var rolesForUser = (await OneLoginClient.GetRolesForUser(32715399))
-                .EnsureSuccess();
-        }
+       
 
         [Fact]
         public async Task GetCustomAttributes()
         {
-            var rolesForUser = (await OneLoginClient.GetCustomAttributes())
+            var rolesForUser = (await _oneLoginClient.GetCustomAttributes())
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetAvailableAuthenticationFactorsTest()
         {
-            var rolesForUser = (await OneLoginClient.GetAvailableAuthenticationFactors(32715399))
+            var rolesForUser = (await _oneLoginClient.GetAvailableAuthenticationFactors(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetEnrolledAuthenticationFactors()
         {
-            var rolesForUser = (await OneLoginClient.GetEnrolledAuthenticationFactors(32715399))
+            var rolesForUser = (await _oneLoginClient.GetEnrolledAuthenticationFactors(32715399))
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetGroupsTest()
         {
-            var groups = (await OneLoginClient.GetGroups())
+            var groups = (await _oneLoginClient.GetGroups())
                 .EnsureSuccess();
         }
 
         [Fact]
         public async Task GetGroupTest()
         {
-            var groups = (await OneLoginClient.GetGroup(434968))
+            var groups = (await _oneLoginClient.GetGroup(434968))
                 .EnsureSuccess();
         }
     }

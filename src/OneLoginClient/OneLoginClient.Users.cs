@@ -88,9 +88,9 @@ namespace OneLogin
         /// </summary>
         /// <param name="request">The request object.</param>
         /// <returns></returns>
-        public async Task<GetUsersResponse> CreateUser(CreateUserRequest request)
+        public async Task<CreateUserResponse> CreateUser(CreateUserRequest request)
         {
-            return await PostResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS, request);
+            return await PostResource<CreateUserResponse>(Endpoints.ONELOGIN_USERS, request);
         }
 
 
