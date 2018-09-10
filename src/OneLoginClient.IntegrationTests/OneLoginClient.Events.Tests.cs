@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -9,7 +9,7 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginClientEventsTests
     {
-        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("1e6c17c7ce20cc7a1faa070819555437fcdfcea1a7aa2ba355d49120fb979072", "a3ef28579190690be34df472064a145a640a1dd2cbf9a4c485cc40731dcd9ab6");
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("", "");
 
 
         [Fact]
@@ -37,13 +37,13 @@ namespace OneLogin.IntegrationTests
         {
             var eventsResponse = (await _oneLoginClient.GetEvents())
                 .EnsureSuccess();
-            var eventTypes = (await _oneLoginClient.GetEventTypes());
+            var allEventTypes = (await _oneLoginClient.GetEventTypes());
 
-            var tenEventPages = await _oneLoginClient.GetNextPages(eventsResponse, 20);
+            var twentyEventPages = await _oneLoginClient.GetNextPages(eventsResponse, 20);
 
-            var results = tenEventPages
+            var results = twentyEventPages
                 .SelectMany(re => re.Data)
-                .Select(d => d.InterpolateEvent(eventTypes.Data.ToList()))
+                .Select(d => d.InterpolateEvent(allEventTypes.Data.ToList()))
                 .ToList();
         }
 

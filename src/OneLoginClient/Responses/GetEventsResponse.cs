@@ -14,6 +14,7 @@ namespace OneLogin.Responses
     /// <summary>
     /// An onelogin event.
     /// </summary>
+    [DataContract]
     public class Event
     {
         /// <summary>
@@ -50,7 +51,7 @@ namespace OneLogin.Responses
         /// More details about the event.
         /// </summary>
         [DataMember(Name = "notes")]
-        public object Notes { get; set; }
+        public string Notes { get; set; }
 
         /// <summary>
         /// IP address of the machine used to trigger the event.

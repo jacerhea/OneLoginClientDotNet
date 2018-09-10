@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
@@ -7,7 +7,7 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginTokenTests
     {
-        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("1e6c17c7ce20cc7a1faa070819555437fcdfcea1a7aa2ba355d49120fb979072", "a3ef28579190690be34df472064a145a640a1dd2cbf9a4c485cc40731dcd9ab6");
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret");
 
         [Fact]
         public void Empty_ClientId_Throws_An_Exception_In_OneLoginClient()
@@ -39,7 +39,43 @@ namespace OneLogin.IntegrationTests
             token.Data.Should().ContainSingle();
         }
 
-       
+        [Fact]
+        public async Task GetUsersTest()
+        {
+            var usersResponse = (await _oneLoginClient.GetUsers())
+                .EnsureSuccess();
+        }
+
+        [Fact]
+        public async Task GetUserByEmail()
+        {
+            var usersResponse = (await _oneLoginClient.GetUsers(email:"jrhea@performancetrust.com"))
+                .EnsureSuccess();
+            usersResponse.Data.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async Task GetUserByIdTest()
+        {
+            var usersResponse = (await _oneLoginClient.GetUserById(32715399))
+                .EnsureSuccess();
+
+            usersResponse.Data.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async Task GetAppsForUserTest()
+        {
+            var getAppsForUserResponse = (await _oneLoginClient.GetAppsForUser(32715399))
+                .EnsureSuccess();
+        }
+
+        [Fact]
+        public async Task GetGetRolesForUserTest()
+        {
+            var rolesForUser = (await _oneLoginClient.GetRolesForUser(32715399))
+                .EnsureSuccess();
+        }
 
         [Fact]
         public async Task GetCustomAttributes()
