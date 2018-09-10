@@ -97,11 +97,11 @@ namespace OneLogin
         /// <summary>
         /// Updates a onelogin user account.
         /// </summary>
-        /// <param name="request">The request object.</param>
+        /// <param name="byIdRequest">The request object.</param>
         /// <returns></returns>
-        public async Task<GetUsersResponse> UpdateUserById(UpdateUserRequest request)
+        public async Task<GetUsersResponse> UpdateUserById(UpdateUserByIdRequest byIdRequest)
         {
-            return await PostResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS, request);
+            return await PutResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS, byIdRequest);
         }
 
         /// <summary>

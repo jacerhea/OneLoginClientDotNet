@@ -19,7 +19,6 @@ namespace OneLogin.IntegrationTests
             Action ensureSuccess = () => eventTypes.EnsureSuccess();
             ensureSuccess.Should().NotThrow();
             eventTypes.Data.Should().HaveCountGreaterThan(20);
-            var x = eventTypes.Data.Where(et => string.IsNullOrWhiteSpace(et.Description));
         }
 
         [Fact]
@@ -43,7 +42,7 @@ namespace OneLogin.IntegrationTests
 
             var results = twentyEventPages
                 .SelectMany(re => re.Data)
-                .Select(d => d.InterpolateEvent(allEventTypes.Data.ToList()))
+                .Select(@event => @event.InterpolateEvent(allEventTypes.Data.ToList()))
                 .ToList();
         }
 
@@ -67,7 +66,6 @@ namespace OneLogin.IntegrationTests
                 EventTypeId = 300,
                 UserId = 32715399,
                 AppId = 644193,
-
             }));
         }
     }

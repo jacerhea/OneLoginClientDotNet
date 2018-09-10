@@ -28,7 +28,7 @@ namespace OneLogin
         /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
         public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
         {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail });
+            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, PersonalEmail = personalEmail });
         }
     }
 }
