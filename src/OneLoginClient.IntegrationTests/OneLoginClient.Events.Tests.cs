@@ -41,8 +41,8 @@ namespace OneLogin.IntegrationTests
             var twentyEventPages = await _oneLoginClient.GetNextPages(eventsResponse, 20);
 
             var results = twentyEventPages
-                .SelectMany(re => re.Data)
-                .Select(@event => @event.InterpolateEvent(allEventTypes.Data.ToList()))
+                .SelectMany(response => response.Data)
+                .Select(@event => @event.InterpolateEvent(allEventTypes.Data))
                 .ToList();
         }
 
