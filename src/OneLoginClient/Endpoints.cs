@@ -1,5 +1,8 @@
 ﻿namespace OneLogin
 {
+    /// <summary>
+    /// Set of OneLogin Resource endpoints.
+    /// </summary>
     public static class Endpoints
     {
         public const string OneLoginApiBase = "https://api.<us_or_eu>.onelogin.com/";

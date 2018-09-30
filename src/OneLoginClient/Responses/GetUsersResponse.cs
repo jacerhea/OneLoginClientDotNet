@@ -132,7 +132,7 @@ namespace OneLogin.Responses
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name = "status")]
-        public StatusType Status { get; set; }
+        public StatusType? Status { get; set; }
 
 
         /// <summary>

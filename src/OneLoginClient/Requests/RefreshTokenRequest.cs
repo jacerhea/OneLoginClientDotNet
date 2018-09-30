@@ -1,8 +1,9 @@
-﻿using OneLogin.Descriptors;
-
+﻿
 namespace OneLogin.Requests
 {
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/oauth20-tokens/refresh-tokens")]
+    /// <summary>
+    /// https://developers.onelogin.com/api-docs/1/oauth20-tokens/refresh-tokens
+    /// </summary>
     public class RefreshTokenRequest
     {
         public string GrantType => "refresh_token";

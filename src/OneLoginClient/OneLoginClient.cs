@@ -5,15 +5,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using OneLogin.Descriptors;
 using OneLogin.Responses;
 
 namespace OneLogin
 {
     /// <summary>
     /// A client class to access the onelogin API /1
+    /// https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/getting-started/dev-overview")]
     public partial class OneLoginClient
     {
         private readonly string _clientId;
