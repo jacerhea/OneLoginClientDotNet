@@ -1,12 +1,10 @@
 ﻿using System.Runtime.Serialization;
-using OneLogin.Descriptors;
 
 namespace OneLogin.Requests
 {
     /// <summary>
-    /// Set of fields to be sent when creating a user.
+    /// Set of fields to be sent when creating a user. https://developers.onelogin.com/api-docs/1/users/create-user
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/create-user")]
     [DataContract]
     public class CreateUserRequest
     {
@@ -41,7 +39,7 @@ namespace OneLogin.Requests
         public string Company { get; set; }
 
         /// <summary>
-        /// 
+        /// The Department the user belongs to.
         /// </summary>
         [DataMember(Name = "department")]
         public string Department { get; set; }

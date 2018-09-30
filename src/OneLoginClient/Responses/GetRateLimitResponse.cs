@@ -1,8 +1,10 @@
-﻿using OneLogin.Descriptors;
-
+﻿
 namespace OneLogin.Responses
 {
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/oauth20-tokens/revoke-tokens")]
+
+    /// <summary>
+    /// https://developers.onelogin.com/api-docs/1/oauth20-tokens/revoke-tokens
+    /// </summary>
     public class GetRateLimitResponse : BaseResponse<RateLimit>
     {
     }

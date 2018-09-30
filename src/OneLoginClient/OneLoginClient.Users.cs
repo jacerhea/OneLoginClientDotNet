@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OneLogin.Descriptors;
 using OneLogin.Requests;
 using OneLogin.Responses;
 
@@ -12,9 +11,9 @@ namespace OneLogin
     {
         /// <summary>
         /// Get all of the users registered with Onelogin filtered by the given parameters.
+        /// https://developers.onelogin.com/api-docs/1/users/get-users
         /// </summary>
         /// <returns>Returns the serialized <see cref="GetUsersResponse"/> as an asynchronous operation.</returns>
-        [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-users")]
         public async Task<GetUsersResponse> GetUsers(string directoryId = null, string email = null, string externalId = null,
             string firstName = null, string managerAdId = null, int? roleId = null, string samAccountName = null, DateTime? since = null,
             DateTime? until = null, string userName = null, string userPrincipalName = null)
@@ -53,10 +52,10 @@ namespace OneLogin
 
         /// <summary>
         /// Get a list of apps accessible by a user, not including personal apps.
+        /// https://developers.onelogin.com/api-docs/1/users/get-apps-for-user
         /// </summary>
         /// <param name="userId">Set to the id of the user that you want to return.</param>
         /// <returns></returns>
-        [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-apps-for-user")]
         public async Task<GetAppsForUserResponse> GetAppsForUser(int userId)
         {
             return await GetResource<GetAppsForUserResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/apps");
