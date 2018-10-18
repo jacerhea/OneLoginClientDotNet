@@ -8,6 +8,8 @@ namespace OneLogin
 {
     public static class ResponseExtensions
     {
+        /// <summary>Throws an Exception if Status.Error is true.</summary>
+        /// <returns>Returns the successful BaseStatusResponse.</returns>
         public static T EnsureSuccess<T>(this T source) where T : BaseStatusResponse
         {
             if (source.Status.Error)
@@ -18,8 +20,13 @@ namespace OneLogin
             return source;
         }
 
-        public static string InterpolateEvent(this Event @event, List<EventType> eventTypes){
-            var eventType = eventTypes.Single(et => et.Id == @event.EventTypeId);
+        /// <summary>
+        /// Returns a string of the EventType data interpolated with the actualized Event.
+        /// </summary>
+        /// <param name="event">The event.</param>
+        /// <param name="eventType">The set of all event types to </param>
+        /// <returns></returns>
+        public static string InterpolateEvent(this Event @event, EventType eventType){
             var matches = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
 
             var result = @eventType.Description;

@@ -42,7 +42,7 @@ namespace OneLogin.IntegrationTests
 
             var results = twentyEventPages
                 .SelectMany(response => response.Data)
-                .Select(@event => @event.InterpolateEvent(allEventTypes.Data))
+                .Select(@event => @event.InterpolateEvent(allEventTypes.Data.Single(et => et.Id == @event.EventTypeId)))
                 .ToList();
         }
 

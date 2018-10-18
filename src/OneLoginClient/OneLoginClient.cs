@@ -128,6 +128,7 @@ namespace OneLogin
         private async Task<T> GetResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.GetAsync(url));
         }
@@ -137,6 +138,7 @@ namespace OneLogin
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
@@ -159,6 +161,7 @@ namespace OneLogin
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
@@ -179,6 +182,7 @@ namespace OneLogin
         private async Task<T> DeleteResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.DeleteAsync(url));
         }
