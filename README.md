@@ -1,21 +1,18 @@
 # OneLogin Dot Net Client
-This is a portable library for consuming the WordPress REST-API in (almost) any C# application.
+This is a portable library for consuming the OneLogin REST-API in (almost) any C# application.
 If you find bugs or have any suggestions, feel free to create an issue.
-
-## License
-OneLogin Dot Net Client is published under the [MIT License](https://github.com/wp-net/WordPressPCL/blob/master/LICENSE)
 
 # Quickstart
 
 ## Including OneLogin Dot Net Client
-The WordPressPCL API Wrapper is avaiable through [NuGet](https://www.nuget.org/packages/WordPressPCL/):
+The OneLogin API is avaiable through [NuGet](https://www.nuget.org/packages/OneLogin.API/):
 
 ```
 > Install-Package OneLogin.API
 ```
 
 ## Supported Plattforms
-WordPressPCL is built on top of the new [.NET Standard](https://github.com/dotnet/standard) targeting netstandard versions 1.1 and 2.0 - therefore it should work on the following plaforms:
+OneLogin API is built on top of the new [.NET Standard](https://github.com/dotnet/standard) targeting netstandard versions 1.1 and 2.0 - therefore it should work on the following plaforms:
 * .NET Framework 4.5 and newer
 * .NET Core
 * Universal Windows Platform (uap)
@@ -28,9 +25,10 @@ WordPressPCL is built on top of the new [.NET Standard](https://github.com/dotne
 ```c#
 // Initialize
 var client = new OneLoginClient("Your Onelogin client id", "Your Onelogin client secret");
-
+```
 That's it! The token will be generated and managed for you by the OneLoginClient.
 
+```c#
 // Users
 var userResponse = await _oneLoginClient.GetUserById(userId);
 var userAppsResponse = await _oneLoginClient.GetAppsForUser(userId);
@@ -53,12 +51,7 @@ var results = eventsResponse
     .SelectMany(response => response.Data)
     .Select(@event => @event.InterpolateEvent(allEventTypes.Data))
     .ToList();
-
-
-## Additional Features
-
-- 
-- [HttpResponsePreProcessing](https://github.com/wp-net/WordPressPCL/wiki/HttpResponsePreProcessing): manipulate the API response before deserializing it
+```
 
 ## Contribution Guidelines
 We're very happy to get input from the community on this project! To keep the code clean we ask you to follow a few simple contribution guidelines.
