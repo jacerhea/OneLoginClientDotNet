@@ -65,7 +65,7 @@ namespace OneLogin.IntegrationTests
             {
                 EventTypeId = 300,
                 UserId = 32715399,
-                AppId = 644193,
+                AppId = 644193
             }));
         }
     }
