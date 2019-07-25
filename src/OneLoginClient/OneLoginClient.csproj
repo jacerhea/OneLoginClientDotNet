@@ -17,6 +17,10 @@
     <AssemblyVersion>1.0.5.0</AssemblyVersion>
     <FileVersion>1.0.5.0</FileVersion>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\jrhea\Documents\Git Projects\OneLoginClientDotNet\src\OneLoginClient\OneLogin.Client.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
