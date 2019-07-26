@@ -166,7 +166,7 @@ namespace OneLogin
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Put,
-                RequestUri = new Uri(url),
+                RequestUri = new Uri(url, UriKind.Relative),
                 Content = content
             };
 
