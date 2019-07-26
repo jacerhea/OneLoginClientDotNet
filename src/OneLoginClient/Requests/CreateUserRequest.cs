@@ -1,12 +1,10 @@
 ﻿using System.Runtime.Serialization;
-using OneLogin.Descriptors;
 
 namespace OneLogin.Requests
 {
     /// <summary>
-    /// Set of fields to be sent when creating a user.
+    /// Set of fields to be sent when creating a user. https://developers.onelogin.com/api-docs/1/users/create-user
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/create-user")]
     [DataContract]
     public class CreateUserRequest
     {
@@ -41,7 +39,7 @@ namespace OneLogin.Requests
         public string Company { get; set; }
 
         /// <summary>
-        /// 
+        /// The Department the user belongs to.
         /// </summary>
         [DataMember(Name = "department")]
         public string Department { get; set; }
@@ -50,7 +48,7 @@ namespace OneLogin.Requests
         /// Group to which the user belongs.
         /// </summary>
         [DataMember(Name = "group_id")]
-        public string GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         /// <summary>
         /// Number of sequential invalid login attempts the user has made that is less than or equal to the Maximum invalid login attempts value defined on the Session page in OneLogin.
@@ -64,12 +62,6 @@ namespace OneLogin.Requests
         /// </summary>
         [DataMember(Name = "lastname")]
         public string LastName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember(Name = "notes")]
-        public string Notes { get; set; }
 
         /// <summary>
         /// OpenID URL that can be configured in other applications that accept OpenID for sign-in.
@@ -105,7 +97,7 @@ namespace OneLogin.Requests
         /// ID of the directory (Active Directory, LDAP, for example) from which the user was created.
         /// </summary>
         [DataMember(Name = "directory_id")]
-        public string DirectoryId { get; set; }
+        public int? DirectoryId { get; set; }
 
         /// <summary>
         /// Synchronized from Active Directory.

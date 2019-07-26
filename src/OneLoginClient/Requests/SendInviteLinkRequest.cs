@@ -18,6 +18,6 @@ namespace OneLogin.Requests
         /// If you want to send the invite email to an email other than the one provided in  email, provide it here. The invite link will be sent to this address instead.
         /// </summary>
         [DataMember(Name = "personal_email")]
-        public string personal_email { get; set; }
+        public string PersonalEmail { get; set; }
     }
 }

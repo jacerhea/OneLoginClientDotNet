@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OneLogin.Descriptors;
 using OneLogin.Types;
 
 namespace OneLogin.Responses
@@ -9,8 +8,8 @@ namespace OneLogin.Responses
     /// <summary>
     /// Get a list of apps accessible by a user, not including personal apps.
     /// To get a list of apps accessible by a user to embed in your company intranet, for example, see Get Apps to Embed for a User.
+    /// https://developers.onelogin.com/api-docs/1/users/get-apps-for-user
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/users/get-apps-for-user")]
     public class GetAppsForUserResponse : BaseResponse<UserApps>
     {
 

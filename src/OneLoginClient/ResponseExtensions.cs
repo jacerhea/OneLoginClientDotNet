@@ -8,6 +8,8 @@ namespace OneLogin
 {
     public static class ResponseExtensions
     {
+        /// <summary>Throws an Exception if Status.Error is true.</summary>
+        /// <returns>Returns the successful BaseStatusResponse.</returns>
         public static T EnsureSuccess<T>(this T source) where T : BaseStatusResponse
         {
             if (source.Status.Error)
@@ -18,20 +20,25 @@ namespace OneLogin
             return source;
         }
 
-        public static string InterpolateEvent(this Event @event, List<EventType> eventTypes){
-            var eventType = eventTypes.Single(et => et.Id == @event.EventTypeId);
-            var x = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
+        /// <summary>
+        /// Returns a string of the EventType data interpolated with the actualized Event.
+        /// </summary>
+        /// <param name="event">The event.</param>
+        /// <param name="eventType">The set of all event types to </param>
+        /// <returns></returns>
+        public static string InterpolateEvent(this Event @event, EventType eventType){
+            var matches = Regex.Matches(eventType.Description, @"%\w+%|%\w+(\s\w+)*%");
 
             var result = @eventType.Description;
             var properties = @event.GetType().GetProperties()
-                                   .ToDictionary(prop => prop.Name);
+                                   .ToDictionary(prop => prop.Name, prop => prop, StringComparer.CurrentCultureIgnoreCase);
 
-            foreach(var y in x.Cast<Match>().Where(mn => mn.Success)){
-                var matchValue = y.Value.Replace("%", string.Empty);
+            foreach(var match in matches.Cast<Match>().Where(mn => mn.Success)){
+                var matchValue = match.Value.Replace("%", string.Empty);
 
-                if (matchValue == "note" && properties.ContainsKey("notes"))
+                if (matchValue == "note" && properties.ContainsKey(nameof(Event.Notes)))
                 {
-                    var property = properties["notes"];
+                    var property = properties[nameof(Event.Notes)];
                     var propertyValue = property.GetValue(@event).ToString();
 
                     result = result.Replace("%note%", propertyValue);
@@ -42,7 +49,7 @@ namespace OneLogin
                     var property = properties[matchValue];
                     var propertyValue = property.GetValue(@event).ToString();
 
-                    result = result.Replace(y.Value, propertyValue);
+                    result = result.Replace(match.Value, propertyValue);
                     continue;
                 }
 
@@ -52,7 +59,7 @@ namespace OneLogin
                     var property = properties[propertyName];
                     var propertyValue = property.GetValue(@event).ToString();
 
-                    result = result.Replace(y.Value, propertyValue);
+                    result = result.Replace(match.Value, propertyValue);
                     continue;
                 }
       

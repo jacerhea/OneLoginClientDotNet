@@ -3,35 +3,28 @@
 namespace OneLogin.Requests
 {
     /// <summary>
-    /// Request to set a users' password with a salt and hashed code.
+    /// Request to set a users's password with cleartext.
     /// </summary>
     [DataContract]
-    public class SetPasswordByIdUsingSaltAndSHA256
+    public class SetPasswordByIdUsingCleartextRequest
     {
         /// <summary>
-        /// Set to the password value using a SHA-256-encoded value. If you are including your own password_salt value in your request, prepend the salt value to the cleartext password value before SHA-256-encoding it.
+        /// Set to the password value using cleartext.
         /// </summary>
         [DataMember(Name = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// This value must match the password value.
+        /// Ensure that this value matches the password value exactly.
         /// </summary>
         [DataMember(Name = "password_confirmation")]
         public string PasswordConfirmation { get; set; }
 
         /// <summary>
-        /// Set to salt+sha256.
+        /// Defaults to false. This will validate the password against the users OneLogin password policy.
         /// </summary>
-        [DataMember(Name = "password_algorithm")]
-        public string PasswordAlgorithm { get; set; }
-
-
-        /// <summary>
-        /// Optional. If your password hash has been salted then you can provide the salt used in this param.
-        /// This assumes that the salt was prepended to the password before doing the SHA256 hash. The API supports a salt value that is up to 40 characters long.
-        /// </summary>
-        [DataMember(Name = "password_salt")]
-        public string PasswordSalt{ get; set; }
+        [DataMember(Name = "validate_policy")]
+        public bool ValidatePolicy { get; set; }
     }
+
 }

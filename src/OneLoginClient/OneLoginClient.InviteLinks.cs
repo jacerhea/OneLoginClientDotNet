@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using OneLogin.Requests;
+using OneLogin.Responses;
 
 namespace OneLogin
 {
-    public class OneLoginClient : OneLoginClient
+    public partial class OneLoginClient
     {
         /// <summary>
         /// Generate an invite link for a user that you have already created in your OneLogin account.
@@ -25,7 +28,7 @@ namespace OneLogin
         /// <returns>The user can click the link to set his password and access your OneLogin portal.</returns>
         public async Task<EmptyResponse> SendInviteLink(string email, string personalEmail = null)
         {
-            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, personal_email = personalEmail });
+            return await PostResource<EmptyResponse>($"{Endpoints.ONELOGIN_INVITES}/send_invite_link", new SendInviteLinkRequest { Email = email, PersonalEmail = personalEmail });
         }
     }
 }

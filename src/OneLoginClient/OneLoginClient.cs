@@ -5,15 +5,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using OneLogin.Descriptors;
 using OneLogin.Responses;
 
 namespace OneLogin
 {
     /// <summary>
     /// A client class to access the onelogin API /1
+    /// https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
     /// </summary>
-    [SourceDocumentation("https://developers.onelogin.com/api-docs/1/getting-started/dev-overview")]
     public partial class OneLoginClient
     {
         private readonly string _clientId;
@@ -129,6 +128,7 @@ namespace OneLogin
         private async Task<T> GetResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.GetAsync(url));
         }
@@ -138,6 +138,7 @@ namespace OneLogin
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
@@ -160,11 +161,12 @@ namespace OneLogin
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var content = new StringContent(JsonConvert.SerializeObject(request));
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Put,
-                RequestUri = new Uri(url),
+                RequestUri = new Uri(url, UriKind.Relative),
                 Content = content
             };
 
@@ -180,6 +182,7 @@ namespace OneLogin
         private async Task<T> DeleteResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
+
             var client = await GetClient();
             return await ParseHttpResponse<T>(client.DeleteAsync(url));
         }
