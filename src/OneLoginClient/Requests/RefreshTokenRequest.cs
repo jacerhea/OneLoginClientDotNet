@@ -1,9 +1,12 @@
 ﻿
+using System.Runtime.Serialization;
+
 namespace OneLogin.Requests
 {
     /// <summary>
     /// https://developers.onelogin.com/api-docs/1/oauth20-tokens/refresh-tokens
     /// </summary>
+    [DataContract]
     public class RefreshTokenRequest
     {
         public string GrantType => "refresh_token";

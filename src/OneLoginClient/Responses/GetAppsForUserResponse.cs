@@ -10,6 +10,7 @@ namespace OneLogin.Responses
     /// To get a list of apps accessible by a user to embed in your company intranet, for example, see Get Apps to Embed for a User.
     /// https://developers.onelogin.com/api-docs/1/users/get-apps-for-user
     /// </summary>
+    [DataContract]
     public class GetAppsForUserResponse : BaseResponse<UserApps>
     {
 

@@ -8,6 +8,7 @@ namespace OneLogin.Requests
     /// <summary>
     /// Set the State for a user.
     /// </summary>
+    [DataContract]
     public class SetUserStateRequest
     {
         /// <summary>
