@@ -5,7 +5,9 @@
     <AssemblyName>OneLogin.Client</AssemblyName>
     <RootNamespace>OneLogin</RootNamespace>
     <PackageId>OneLogin.API</PackageId>
-    <Description>An client library for accessing all the features of the Onelogin API /1. This library is NOT for the older v1-v3 API's, which have been deprected.  https://developers.onelogin.com/api-docs/1/getting-started/dev-overview</Description>
+    <Description>An client library for accessing all the features of the Onelogin API /1.  https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
+
+This library is NOT for the older v1-v3 API's, which have been deprected.</Description>
     <Authors>Jace Rhea</Authors>
     <PackageProjectUrl>https://github.com/jacerhea/OneLoginClientDotNet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jacerhea/OneLoginClientDotNet</RepositoryUrl>
@@ -13,9 +15,10 @@
     <PackageReleaseNotes></PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.6</Version>
-    <AssemblyVersion>1.0.5.0</AssemblyVersion>
-    <FileVersion>1.0.5.0</FileVersion>
+    <Version>1.0.7</Version>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
+    <PackageIconUrl>https://www.onelogin.com/assets/img/favicon32.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
