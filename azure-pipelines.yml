@@ -1,7 +1,7 @@
 steps:
 # ...
 # do this near the end of your pipeline in most cases
-- script: dotnet pack ~/src/OneLoginClient/OneLoginClient.csproj
+- script: dotnet pack src/OneLoginClient/OneLoginClient.csproj
 - task: NuGetCommand@2
   inputs:
     command: push
