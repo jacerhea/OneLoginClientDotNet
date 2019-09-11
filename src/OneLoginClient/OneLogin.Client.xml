@@ -213,7 +213,7 @@
             <param name="request">The request object.</param>
             <returns></returns>
         </member>
-        <member name="M:OneLogin.OneLoginClient.UpdateUserById(OneLogin.Requests.UpdateUserByIdRequest)">
+        <member name="M:OneLogin.OneLoginClient.UpdateUserById(System.Int32,OneLogin.Requests.UpdateUserByIdRequest)">
             <summary>
             Updates a onelogin user account.
             </summary>
@@ -605,6 +605,122 @@
             <summary>
             Request to authenticate a one-time password (OTP) code provided by a multifactor authentication (MFA) device.
             If this is the first time that the OTP device has been confirmed, then the device will be updated to have a state of enabled.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Company">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Department">
+            <summary>
+            The Department the user belongs to.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.DirectoryId">
+            <summary>
+            ID of the directory (Active Directory, LDAP, for example) from which the user was created.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.DistinguishedName">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Email">
+            <summary>
+            User’s email address, which he also uses to log in to OneLogin.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ExternalId">
+            <summary>
+            External ID that can be used to uniquely identify the user in another system.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.FirstName">
+            <summary>
+            User’s first name.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.GroupId">
+            <summary>
+            Group to which the user belongs.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.InvalidLoginAttempts">
+            <summary>
+            Number of sequential invalid login attempts the user has made that is less than or equal to the Maximum invalid login attempts value defined on the Session page in OneLogin.
+            When this number reaches this value, the user account will be locked for the amount of time defined by the Lock effective period field on the Session page and this value will be reset to 0.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.LastName">
+            <summary>
+            User’s last name.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.LocaleCode">
+            <summary>
+            Represents a geographical, political, or cultural region. Some features may use the locale value to tailor the display of information, such as numbers, for the user based on locale-specific customs and conventions.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ManagerAdId">
+            <summary>
+            ID of the user’s manager in Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ManagerUserId">
+            <summary>
+            ID of the user’s manager in Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.MemberOf">
+            <summary>
+            Member of
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Notes">
+            <summary>
+            Notes
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.OpenIdName">
+            <summary>
+            OpenID URL that can be configured in other applications that accept OpenID for sign-in.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Phone">
+            <summary>
+            User’s phone number.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.SamAccountName">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.State">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Status">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Username">
+            <summary>
+            If the user’s directory is set to authenticate using a user name value, this is the value used to sign in.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.UserPrincipalName">
+            <summary>
+            Synchronized from Active Directory.
             </summary>
         </member>
         <member name="T:OneLogin.Requests.VerifyAnAuthenticationFactorRequest">
@@ -1307,6 +1423,11 @@
             </summary>
         </member>
         <member name="P:OneLogin.Responses.User.ManagerAdId">
+            <summary>
+            ID of the user’s manager in Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Responses.User.ManagerUserId">
             <summary>
             ID of the user’s manager in Active Directory.
             </summary>
