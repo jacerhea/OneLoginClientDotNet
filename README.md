@@ -12,9 +12,9 @@ The OneLogin API is avaiable through [NuGet](https://www.nuget.org/packages/OneL
 ```
 
 ## Supported Plattforms
-OneLogin API is built on top of the new [.NET Standard](https://github.com/dotnet/standard) targeting netstandard versions 1.1 and 2.0 - therefore it should work on the following plaforms:
-* .NET Framework 4.5 and newer
-* .NET Core
+OneLogin API is built on top of the new [.NET Standard](https://github.com/dotnet/standard) targeting netstandard versions 1.3 - therefore it should work on the following plaforms:
+* .NET Framework 4.6 and newer
+* .NET Core 1.1 or newer
 * Universal Windows Platform (uap)
 * Windows 8.0 and newer
 * Windows Phone (WinRT, not Silverlight)
