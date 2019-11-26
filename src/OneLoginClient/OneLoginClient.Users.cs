@@ -98,7 +98,7 @@ namespace OneLogin
         /// </summary>
         /// <param name="byIdRequest">The request object.</param>
         /// <returns></returns>
-        public async Task<GetUsersResponse> UpdateUserById(UpdateUserByIdRequest byIdRequest)
+        public async Task<GetUsersResponse> UpdateUserById(int id, UpdateUserByIdRequest byIdRequest)
         {
             return await PutResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS, byIdRequest);
         }
