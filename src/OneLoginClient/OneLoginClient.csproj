@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>OneLogin.Client</AssemblyName>
     <RootNamespace>OneLogin</RootNamespace>
     <PackageId>OneLogin.API</PackageId>
