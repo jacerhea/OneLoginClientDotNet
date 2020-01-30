@@ -3,12 +3,15 @@
 namespace OneLogin.Responses
 {
     /// <summary>
-    /// 
+    /// Use this API to trigger an SMS or Push notification containing a One-Time Password (OTP) that can be used to authenticate a user with the Verify Factor call.  It is only necessary to activate a factor if needs_trigger is returned as true via the Enroll Factor or Get Enrolled Factors calls.
     /// </summary>
     public class ActivateAnAuthenticationFactorResponse : BaseResponse<ActivatedFactor>
     {
     }
 
+    /// <summary>
+    /// OneLogin provides a series of API endpoints that let you manage MFA for your users. You can enroll multi-factor devices, trigger the sending of One-Time Password (OTP) codes via SMS or Push notification and, Verify codes to authenticate users.
+    /// </summary>
     [DataContract]
     public class ActivatedFactor
     {
