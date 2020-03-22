@@ -124,7 +124,7 @@ namespace OneLogin.Requests
         /// Synchronized from Active Directory.
         /// </summary>
         [DataMember(Name = "state")]
-        public State State { get; set; }
+        public State? State { get; set; }
 
         /// <summary>
         /// Synchronized from Active Directory.
