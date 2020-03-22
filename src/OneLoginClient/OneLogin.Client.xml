@@ -4,11 +4,42 @@
         <name>OneLogin.Client</name>
     </assembly>
     <members>
+        <member name="M:OneLogin.Converters.JsonConverterObjectToString.CanConvert(System.Type)">
+            <summary>
+            Can convert object to json object
+            </summary>
+            <param name="objectType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.Converters.JsonConverterObjectToString.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="existingValue"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.Converters.JsonConverterObjectToString.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Write json to JsonWriter
+            </summary>
+            <param name="writer"></param>
+            <param name="value"></param>
+            <param name="serializer"></param>
+        </member>
         <member name="T:OneLogin.Endpoints">
             <summary>
             Set of OneLogin Resource endpoints.
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.Token" -->
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_USERS" -->
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_GROUPS" -->
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_EVENTS" -->
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_INVITES" -->
+        <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_ROLES" -->
         <member name="T:OneLogin.OneLoginClient">
             <summary>
             A client class to access the onelogin API /1
@@ -38,6 +69,24 @@
             <a href="https://developers.onelogin.com/api-docs/1/oauth20-tokens/generate-tokens-2">Documentation</a>.
             </summary>
             <returns>Returns the serialized <see cref="T:OneLogin.Responses.GenerateTokensResponse"/> as an asynchronous operation.</returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.GetNextPages``1(``0,System.Nullable{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="pages"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.GetPreviousPages``1(``0,System.Nullable{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="pages"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
         </member>
         <member name="M:OneLogin.OneLoginClient.GetEventTypes">
             <summary>
@@ -213,7 +262,7 @@
             <param name="request">The request object.</param>
             <returns></returns>
         </member>
-        <member name="M:OneLogin.OneLoginClient.UpdateUserById(OneLogin.Requests.UpdateUserByIdRequest)">
+        <member name="M:OneLogin.OneLoginClient.UpdateUserById(System.Int32,OneLogin.Requests.UpdateUserByIdRequest)">
             <summary>
             Updates a onelogin user account.
             </summary>
@@ -607,6 +656,122 @@
             If this is the first time that the OTP device has been confirmed, then the device will be updated to have a state of enabled.
             </summary>
         </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Company">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Department">
+            <summary>
+            The Department the user belongs to.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.DirectoryId">
+            <summary>
+            ID of the directory (Active Directory, LDAP, for example) from which the user was created.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.DistinguishedName">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Email">
+            <summary>
+            User’s email address, which he also uses to log in to OneLogin.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ExternalId">
+            <summary>
+            External ID that can be used to uniquely identify the user in another system.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.FirstName">
+            <summary>
+            User’s first name.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.GroupId">
+            <summary>
+            Group to which the user belongs.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.InvalidLoginAttempts">
+            <summary>
+            Number of sequential invalid login attempts the user has made that is less than or equal to the Maximum invalid login attempts value defined on the Session page in OneLogin.
+            When this number reaches this value, the user account will be locked for the amount of time defined by the Lock effective period field on the Session page and this value will be reset to 0.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.LastName">
+            <summary>
+            User’s last name.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.LocaleCode">
+            <summary>
+            Represents a geographical, political, or cultural region. Some features may use the locale value to tailor the display of information, such as numbers, for the user based on locale-specific customs and conventions.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ManagerAdId">
+            <summary>
+            ID of the user’s manager in Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.ManagerUserId">
+            <summary>
+            ID of the user’s manager in Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.MemberOf">
+            <summary>
+            Member of
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Notes">
+            <summary>
+            Notes
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.OpenIdName">
+            <summary>
+            OpenID URL that can be configured in other applications that accept OpenID for sign-in.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Phone">
+            <summary>
+            User’s phone number.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.SamAccountName">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.State">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Status">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.Username">
+            <summary>
+            If the user’s directory is set to authenticate using a user name value, this is the value used to sign in.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.UpdateUserByIdRequest.UserPrincipalName">
+            <summary>
+            Synchronized from Active Directory.
+            </summary>
+        </member>
         <member name="T:OneLogin.Requests.VerifyAnAuthenticationFactorRequest">
             <summary>
             Request to authenticate a one-time password (OTP) code provided by a multifactor authentication (MFA) device.
@@ -637,7 +802,12 @@
         </member>
         <member name="T:OneLogin.Responses.ActivateAnAuthenticationFactorResponse">
             <summary>
-            
+            Use this API to trigger an SMS or Push notification containing a One-Time Password (OTP) that can be used to authenticate a user with the Verify Factor call.  It is only necessary to activate a factor if needs_trigger is returned as true via the Enroll Factor or Get Enrolled Factors calls.
+            </summary>
+        </member>
+        <member name="T:OneLogin.Responses.ActivatedFactor">
+            <summary>
+            OneLogin provides a series of API endpoints that let you manage MFA for your users. You can enroll multi-factor devices, trigger the sending of One-Time Password (OTP) codes via SMS or Push notification and, Verify codes to authenticate users.
             </summary>
         </member>
         <member name="P:OneLogin.Responses.ActivatedFactor.UserDisplayName">
@@ -700,6 +870,16 @@
         <member name="T:OneLogin.Responses.EmptyResponse">
             <summary>
             Response message containing the status of the request.
+            </summary>
+        </member>
+        <member name="T:OneLogin.Responses.EnrollAnAuthenticationFactorResponse">
+            <summary>
+            If the authentication factor requires confirmation to complete, then the device will have an active state of false otherwise it will have an active state of true (corresponding to devices that are either pending confirmation or not)
+            </summary>
+        </member>
+        <member name="T:OneLogin.Responses.AuthenticationFactor">
+            <summary>
+            OneLogin provides a series of API endpoints that let you manage MFA for your users. You can enroll multi-factor devices, trigger the sending of One-Time Password (OTP) codes via SMS or Push notification and, Verify codes to authenticate users.
             </summary>
         </member>
         <member name="P:OneLogin.Responses.AuthenticationFactor.Active">

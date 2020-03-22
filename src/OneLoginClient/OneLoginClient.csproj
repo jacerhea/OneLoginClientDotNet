@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>OneLogin.Client</AssemblyName>
     <RootNamespace>OneLogin</RootNamespace>
     <PackageId>OneLogin.API</PackageId>
@@ -15,22 +15,19 @@ This library is NOT for the older v1-v3 API's, which have been deprected.</Descr
     <PackageReleaseNotes></PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.8</Version>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
-    <FileVersion>1.0.8.0</FileVersion>
+    <Version>1.0.10</Version>
+    <AssemblyVersion>1.0.10.0</AssemblyVersion>
+    <FileVersion>1.0.10.0</FileVersion>
     <PackageIconUrl>https://www.onelogin.com/assets/img/favicon32.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\jrhea\Documents\Git Projects\OneLoginClientDotNet\src\OneLoginClient\OneLogin.Client.xml</DocumentationFile>
+    <DocumentationFile>OneLogin.Client.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\jrhea\Documents\Git Projects\OneLoginClientDotNet\src\OneLoginClient\OneLogin.Client.xml</DocumentationFile>
+    <DocumentationFile>OneLogin.Client.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>

@@ -44,20 +44,6 @@ namespace OneLogin
             _region = region;
         }
 
-        public async Task<HttpClient> GetClient()
-        {
-            if (_client != null)
-            {
-                return _client;
-            }
-
-            var token = await GenerateTokens();
-            token.EnsureSuccess();
-            var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", _region)) };
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
-            return _client = client;
-        }
-
         /// <summary>
         /// Generate an access token and refresh token that you can use to call our resource APIs.
         /// For an overview of the authorization flow, see Authorizing Resource API Calls.
@@ -91,6 +77,13 @@ namespace OneLogin
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="pages"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public async Task<List<T>> GetNextPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();
@@ -109,6 +102,13 @@ namespace OneLogin
             return results;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="pages"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public async Task<List<T>> GetPreviousPages<T>(T source, int? pages = null) where T : IPageable
         {
             var results = new List<T>();
@@ -133,6 +133,19 @@ namespace OneLogin
             return await ParseHttpResponse<T>(client.GetAsync(url));
         }
 
+        private async Task<HttpClient> GetClient()
+        {
+            if (_client != null)
+            {
+                return _client;
+            }
+
+            var token = await GenerateTokens();
+            token.EnsureSuccess();
+            var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", _region)) };
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
+            return _client = client;
+        }
 
         private async Task<T> PostResource<T>(string url, object request)
         {

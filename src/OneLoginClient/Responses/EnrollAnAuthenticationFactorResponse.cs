@@ -2,12 +2,19 @@
 
 namespace OneLogin.Responses
 {
+    /// <summary>
+    /// If the authentication factor requires confirmation to complete, then the device will have an active state of false otherwise it will have an active state of true (corresponding to devices that are either pending confirmation or not)
+    /// </summary>
     [DataContract]
     public class EnrollAnAuthenticationFactorResponse : BaseResponse<AuthenticationFactor>
     {
 
     }
 
+
+    /// <summary>
+    /// OneLogin provides a series of API endpoints that let you manage MFA for your users. You can enroll multi-factor devices, trigger the sending of One-Time Password (OTP) codes via SMS or Push notification and, Verify codes to authenticate users.
+    /// </summary>
     [DataContract]
     public class AuthenticationFactor{
 
