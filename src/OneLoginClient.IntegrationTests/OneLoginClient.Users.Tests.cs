@@ -76,5 +76,17 @@ namespace OneLogin.IntegrationTests
             var rolesForUser = (await _oneLoginClient.GetRolesForUser(32715399))
                 .EnsureSuccess();
         }
+
+        [Fact]
+        public async Task UpdateUserByIdTest()
+        {
+            var updateResponse = await _oneLoginClient.UpdateUserById(32715399, new UpdateUserByIdRequest
+            {
+                FirstName = "FirstNameTest" // Don't actually change it so we don't affect the integration environment
+            });
+
+            updateResponse.EnsureSuccess();
+            updateResponse.Data.Should().HaveCount(1);
+        }
     }
 }

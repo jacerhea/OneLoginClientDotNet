@@ -152,7 +152,10 @@ namespace OneLogin
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var content = new StringContent(JsonConvert.SerializeObject(request));
+            var content = new StringContent(JsonConvert.SerializeObject(request, settings: new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            }));
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -175,7 +178,10 @@ namespace OneLogin
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var content = new StringContent(JsonConvert.SerializeObject(request));
+            var content = new StringContent(JsonConvert.SerializeObject(request, settings: new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            }));
             var httpRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Put,
