@@ -266,6 +266,7 @@
             <summary>
             Updates a onelogin user account.
             </summary>
+            <param name="userId">Set to the id of the user which you want to update.</param>
             <param name="byIdRequest">The request object.</param>
             <returns></returns>
         </member>
