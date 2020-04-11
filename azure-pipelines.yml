@@ -12,6 +12,9 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  Major: '1'
+  Minor: '0'
+  Patch: '0'
 
 steps:
 - script: dotnet build "src/OneLoginClientDotNet.sln" --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
@@ -29,3 +32,5 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget'
+    versioningScheme: byEnvVar
+    versionEnvVar: $(ver)
