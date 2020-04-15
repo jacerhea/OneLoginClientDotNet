@@ -23,4 +23,7 @@
     <ProjectReference Include="..\OneLoginClient\OneLoginClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
 </Project>
