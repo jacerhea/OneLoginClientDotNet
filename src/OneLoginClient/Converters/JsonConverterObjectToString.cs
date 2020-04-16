@@ -27,11 +27,7 @@ namespace OneLogin.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             JToken token = JToken.Load(reader);
-            if (token.Type == JTokenType.Object)
-            {
-                return token.ToString();
-            }
-            return null;
+            return token.ToString();
         }
 
         /// <summary>
@@ -42,11 +38,9 @@ namespace OneLogin.Converters
         /// <param name="serializer"></param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            //serializer.Serialize(writer, value);
-
             //serialize as actual JSON and not string data
-            var token = JToken.Parse(value.ToString());
-            writer.WriteToken(token.CreateReader());
+            //var token = JToken.Parse(value.ToString());
+            //writer.WriteToken(token.CreateReader());
 
         }
     }

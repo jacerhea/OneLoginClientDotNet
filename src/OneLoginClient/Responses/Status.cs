@@ -5,7 +5,7 @@ using OneLogin.Converters;
 namespace OneLogin.Responses
 {
     /// <summary>
-    /// An contract for the common status schema returned from the API.
+    /// A common status schema returned from the API.
     /// </summary>
     [DataContract]
     public class Status
