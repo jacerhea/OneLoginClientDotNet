@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,6 +20,8 @@ namespace OneLogin
         private readonly string _region;
         private static HttpClient _client;
         private static readonly List<string> ValidRegions = new List<string> { "us", "eu" };
+        private const string JsonMediaType = "application/json";
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OneLoginClient"/> class.
@@ -70,7 +72,7 @@ namespace OneLogin
 
             // We add the Content-Type Header like this because otherwise dotnet
             // adds the utf-8 charset extension to it which is not compatible with OneLogin
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
 
             var response = client.SendAsync(request);
             return await ParseHttpResponse<GenerateTokensResponse>(response);
@@ -165,7 +167,7 @@ namespace OneLogin
 
             // We add the Content-Type Header like this because otherwise dotnet
             // adds the utf-8 charset extension to it which is not compatible with OneLogin
-            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
 
             var client = await GetClient();
             var response = client.SendAsync(httpRequest);
@@ -191,7 +193,7 @@ namespace OneLogin
 
             // We add the Content-Type Header like this because otherwise dotnet
             // adds the utf-8 charset extension to it which is not compatible with OneLogin
-            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
 
             var client = await GetClient();
             var response = client.SendAsync(httpRequest);
