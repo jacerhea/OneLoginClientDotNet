@@ -9,8 +9,7 @@
     "before_cursor": null,
     "after_cursor": "xxxxb3VudF9pZDo6Oi0tIyNpZDo6OjY3NzI0NzQ",
     "previous_link": null,
-    "next_link": "\"https://api.us.onelogin.com/api/1/users?after_cursor=",
-    "xxxxb3VudF9pZDo6Oi0tIyNpZDo6OjY3NzI0NzQ\""
+    "next_link": "https://api.us.onelogin.com/api/1/users?after_cursor=xxxxb3VudF9pZDo6Oi0tIyNpZDo6OjY3NzI0NzQ"
   },
   "data": [
     {
@@ -55,7 +54,6 @@
         "branch": "Southwest Center"
       }
     },
-    "...",
     {
       "activated_at": "2011-07-26T19:50:47.242Z",
       "created_at": "2009-08-05T20:59:20.190Z",
