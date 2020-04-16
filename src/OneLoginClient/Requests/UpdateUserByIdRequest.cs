@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using OneLogin.Responses;
 using OneLogin.Types;
 
 namespace OneLogin.Requests
@@ -130,7 +129,7 @@ namespace OneLogin.Requests
         /// Synchronized from Active Directory.
         /// </summary>
         [DataMember(Name = "Status")]
-        public Status Status { get; set; }
+        public StatusType? Status { get; set; }
 
         /// <summary>
         /// 
