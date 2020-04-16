@@ -1,0 +1,42 @@
+﻿{
+  "status": {
+    "error": false,
+    "code": 200,
+    "type": "success",
+    "message": "Success"
+  },
+  "data": [
+    {
+      "activated_at": null,
+      "created_at": "2015-11-13T21:08:25.923Z",
+      "email": "lady@gogo.com",
+      "username": "lady@gogo",
+      "firstname": "Lady",
+      "group_id": null,
+      "id": 123456,
+      "invalid_login_attempts": null,
+      "invitation_sent_at": null,
+      "last_login": null,
+      "lastname": "GoGo",
+      "locked_until": null,
+      "notes": null,
+      "openid_name": "lady",
+      "locale_code": null,
+      "password_changed_at": null,
+      "phone": null,
+      "status": null,
+      "updated_at": "2015-11-13T21:08:26.227Z",
+      "distinguished_name": null,
+      "external_id": null,
+      "directory_id": null,
+      "member_of": null,
+      "samaccountname": null,
+      "userprincipalname": null,
+      "manager_ad_id": null,
+      "role_id": null,
+      "custom_attributes": {
+        "best_trick": "front flip"
+      }
+    }
+  ]
+}

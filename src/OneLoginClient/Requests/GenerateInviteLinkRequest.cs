@@ -8,6 +8,9 @@ namespace OneLogin.Requests
     [DataContract]
     public class GenerateInviteLinkRequest
     {
+        /// <summary>
+        /// Set to the user email address to generate an invite link.
+        /// </summary>
         [DataMember(Name = "Email")]
         public string Email { get; set; }
     }
