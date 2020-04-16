@@ -8,7 +8,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\AssignRoleToAUser.200.json" />
+    <None Remove="Data\BadRequest.400.json" />
+    <None Remove="Data\BadRequest.401.json" />
+    <None Remove="Data\GetCustomAttributes.200.json" />
+    <None Remove="Data\GetRolesForUser.200.json" />
+    <None Remove="Data\GetUserById.200.json" />
+    <None Remove="Data\GetUsers.200.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\AssignRoleToAUser.200.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\GetCustomAttributes.200.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\GetRolesForUser.200.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\GetUserById.200.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\GetUsers.200.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\BadRequest.400.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\BadRequest.401.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.7.0" />
+    <PackageReference Include="FluentAssertions.Json" Version="5.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
@@ -21,9 +56,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OneLoginClient\OneLoginClient.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
