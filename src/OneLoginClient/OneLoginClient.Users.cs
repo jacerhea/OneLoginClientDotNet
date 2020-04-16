@@ -10,7 +10,7 @@ namespace OneLogin
     public partial class OneLoginClient
     {
         /// <summary>
-        /// Get all of the users registered with Onelogin filtered by the given parameters.
+        /// Get all of the users registered with OneLogin filtered by the given parameters.
         /// https://developers.onelogin.com/api-docs/1/users/get-users
         /// </summary>
         /// <returns>Returns the serialized <see cref="GetUsersResponse"/> as an asynchronous operation.</returns>
@@ -45,9 +45,9 @@ namespace OneLogin
         /// </summary>
         /// <param name="userId">the id of the user that you want to return.</param>
         /// <returns></returns>
-        public async Task<GetUsersResponse> GetUserById(int userId)
+        public async Task<GetUserResponse> GetUserById(int userId)
         {
-            return await GetResource<GetUsersResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}");
+            return await GetResource<GetUserResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}");
         }
 
         /// <summary>

@@ -42,7 +42,7 @@
         <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_ROLES" -->
         <member name="T:OneLogin.OneLoginClient">
             <summary>
-            A client class to access the onelogin API /1
+            A client class to access the OneLogin API /1
             https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
             </summary>
         </member>
@@ -222,7 +222,7 @@
         </member>
         <member name="M:OneLogin.OneLoginClient.GetUsers(System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Int32},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String,System.String)">
             <summary>
-            Get all of the users registered with Onelogin filtered by the given parameters.
+            Get all of the users registered with OneLogin filtered by the given parameters.
             https://developers.onelogin.com/api-docs/1/users/get-users
             </summary>
             <returns>Returns the serialized <see cref="T:OneLogin.Responses.GetUsersResponse"/> as an asynchronous operation.</returns>
@@ -528,6 +528,11 @@
         <member name="T:OneLogin.Requests.GenerateInviteLinkRequest">
             <summary>
             Generate an invite link for a user that you have already created in your OneLogin account.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Requests.GenerateInviteLinkRequest.Email">
+            <summary>
+            Set to the user email address to generate an invite link.
             </summary>
         </member>
         <member name="T:OneLogin.Requests.GenerateTokenRequest">
@@ -1358,10 +1363,13 @@
             https://developers.onelogin.com/api-docs/1/users/get-roles-for-user
             </summary>
         </member>
-        <member name="T:OneLogin.Responses.GetRolesForUserResponse">
+        <member name="T:OneLogin.Responses.GetUserResponse">
             <summary>
-            https://developers.onelogin.com/api-docs/1/users/get-roles-for-user
+            This call returns up to 50 users per page.
+            For details about using the pagination element to easily “page” through users, see <a href="https://developers.onelogin.com/api-docs/1/getting-started/using-query-parameters#pagination">Pagination</a>.
+            For details about each element in the User resource, see <a href="https://developers.onelogin.com/api-docs/1/users/user-resource">User Resource</a>.
             </summary>
+            <inheritdoc cref="T:OneLogin.Responses.PaginationBaseResponse`1" />
         </member>
         <member name="T:OneLogin.Responses.GetUsersResponse">
             <summary>

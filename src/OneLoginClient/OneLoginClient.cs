@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,7 +10,7 @@ using OneLogin.Responses;
 namespace OneLogin
 {
     /// <summary>
-    /// A client class to access the onelogin API /1
+    /// A client class to access the OneLogin API /1
     /// https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
     /// </summary>
     public partial class OneLoginClient
