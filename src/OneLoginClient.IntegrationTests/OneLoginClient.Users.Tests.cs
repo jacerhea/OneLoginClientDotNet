@@ -8,7 +8,7 @@ namespace OneLogin.IntegrationTests
 {
     public class OneLoginClientUsersTests
     {
-        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("1e6c17c7ce20cc7a1faa070819555437fcdfcea1a7aa2ba355d49120fb979072", "a3ef28579190690be34df472064a145a640a1dd2cbf9a4c485cc40731dcd9ab6");
+        private static readonly OneLoginClient _oneLoginClient = new OneLoginClient("fill in your client id", "fill in your client secret");
 
         [Fact]
         public async Task User_Can_Be_Created()
@@ -88,5 +88,7 @@ namespace OneLogin.IntegrationTests
             updateResponse.EnsureSuccess();
             updateResponse.Data.Should().HaveCount(1);
         }
+
+
     }
 }
