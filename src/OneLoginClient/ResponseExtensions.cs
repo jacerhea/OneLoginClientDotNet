@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using OneLogin.Responses;
 
 namespace OneLogin
 {
+    /// <summary>
+    /// Throws an exception if the Status.Error property for the 
+    /// BaseStatusResponse is true.
+    /// </summary>
     public static class ResponseExtensions
     {
         /// <summary>Throws an Exception if Status.Error is true.</summary>
@@ -14,7 +19,7 @@ namespace OneLogin
         {
             if (source.Status.Error)
             {
-                throw new Exception(source.Status.Message);
+                throw new HttpRequestException(source.Status.Message);
             }
 
             return source;

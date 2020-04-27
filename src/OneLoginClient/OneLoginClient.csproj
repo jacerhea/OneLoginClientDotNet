@@ -5,9 +5,9 @@
     <AssemblyName>OneLogin.Client</AssemblyName>
     <RootNamespace>OneLogin</RootNamespace>
     <PackageId>OneLogin.API</PackageId>
-    <Description>An client library for accessing all the features of the Onelogin API /1.  https://developers.onelogin.com/api-docs/1/getting-started/dev-overview
+    <Description>A client library for accessing all the features of the Onelogin API /1 and API/2.  
 
-This library is NOT for the older v1-v3 API's, which have been deprected.</Description>
+https://developers.onelogin.com/api-docs/2/getting-started/dev-overview</Description>
     <Authors>Jace Rhea</Authors>
     <PackageProjectUrl>https://github.com/jacerhea/OneLoginClientDotNet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jacerhea/OneLoginClientDotNet</RepositoryUrl>
@@ -15,9 +15,9 @@ This library is NOT for the older v1-v3 API's, which have been deprected.</Descr
     <PackageReleaseNotes></PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.11</Version>
-    <AssemblyVersion>1.0.11.0</AssemblyVersion>
-    <FileVersion>1.0.11.0</FileVersion>
+    <Version>2.0.0-alpha</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
     <PackageIconUrl>https://www.onelogin.com/assets/img/favicon32.png</PackageIconUrl>
   </PropertyGroup>
 

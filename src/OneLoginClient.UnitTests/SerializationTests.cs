@@ -3,13 +3,16 @@ using System.IO;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OneLogin;
 using OneLogin.Responses;
 using Xunit;
 
-namespace OneLogin.IntegrationTests
+namespace OneLoginClient.UnitTests
 {
     public class SerializationTests
     {
+        private Serializer _serializer = new Serializer();
+
         [Fact]
         public void Api_Source_Api_Example_Serializes_GetRolesForUser()
         {
@@ -62,16 +65,21 @@ namespace OneLogin.IntegrationTests
 
         private void TestReserializationWithEquivalency<T>(string path)
         {
-            var json = File.ReadAllText(path);
+            Func<T> deserialize = () =>
+            {
+                using (var fileStream = File.OpenRead(path))
+                {
+                    return _serializer.DeserializeJsonFromStream<T>(fileStream);
+                }
+            };
 
-            Func<T> reserialize = () => JsonConvert.DeserializeObject<T>(json);
-            var deserializedObject = reserialize.Should().NotThrow().Subject;
+            var deserializedObject = deserialize.Should().NotThrow().Subject;
 
-            Func<string> deserialize = () => JsonConvert.SerializeObject(deserializedObject);
-            var reserializedJson = deserialize.Should().NotThrow().Subject;
+            Func<string> serialized = () => _serializer.Serialize(deserializedObject);
 
-            var expected = JToken.Parse(json);
-            var actual = JToken.Parse(reserializedJson);
+            var serializedAsJson = serialized.Should().NotThrow().Subject;
+            var expected = JToken.Parse(serializedAsJson);
+            var actual = JToken.Parse(File.ReadAllText(path));
 
             actual.Should().BeEquivalentTo(expected);
         }

@@ -1,0 +1,19 @@
+﻿{
+  "ip": "1.2.3.4",
+  "verb": "log-in",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3)...",
+  "user": {
+    "id": "US_112233",
+    "name": "Eve Smith"
+  },
+  "source": {
+    "id": "1234",
+    "name": "ABC Inc"
+  },
+  "session": {
+    "id": "xxxx-xxxxx-xxxxx-xxxxx"
+  },
+  "device": {
+    "id": "xxx-xxx-xxx"
+  }
+}

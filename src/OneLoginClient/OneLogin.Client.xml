@@ -88,6 +88,23 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:OneLogin.OneLoginClient.CreateRequest(System.String,System.Net.Http.HttpMethod,System.Object)">
+            <summary>
+            Create a <see cref="T:System.Net.Http.HttpRequestMessage"/> with Authentication and Json media type headers.
+            </summary>
+            <param name="relativeUri"></param>
+            <param name="method"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.CreateRequest(System.String,System.Net.Http.HttpMethod)">
+            <summary>
+            Create a <see cref="T:System.Net.Http.HttpRequestMessage"/> with Authentication and Json media type headers.
+            </summary>
+            <param name="relativeUri"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
         <member name="M:OneLogin.OneLoginClient.GetEventTypes">
             <summary>
             This call returns a list of all OneLogin event types available to the Events API, providing event type names, event type IDs, and descriptions.
@@ -792,6 +809,12 @@
         <member name="P:OneLogin.Requests.VerifyAnAuthenticationFactorRequest.OtpToken">
             <summary>
             OTP code provided by the device or SMS message sent to user.
+            </summary>
+        </member>
+        <member name="T:OneLogin.ResponseExtensions">
+            <summary>
+            Throws an exception if the Status.Error property for the 
+            BaseStatusResponse is true.
             </summary>
         </member>
         <member name="M:OneLogin.ResponseExtensions.EnsureSuccess``1(``0)">
@@ -1570,7 +1593,7 @@
         </member>
         <member name="T:OneLogin.Responses.Status">
             <summary>
-            An contract for the common status schema returned from the API.
+            A common status schema returned from the API.
             </summary>
         </member>
         <member name="P:OneLogin.Responses.Status.Error">
@@ -1594,9 +1617,59 @@
              </summary>
             
         </member>
+        <member name="T:OneLogin.Responses.Vigilance.GetRiskScoreResponse">
+            <summary>
+            Use this API to get a real-time risk score for a user before completing a critical task or action.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Responses.Vigilance.GetRiskScoreResponse.Score">
+            <summary>
+            The risk score is a number between 0 and 1. Where 0 is low risk and 1 is the highest risk level possible.
+            </summary>
+        </member>
         <member name="T:OneLogin.Responses.WebhookResponse">
             <summary>
             An array of Event objects is sent to your registered endpoint as a POST request.
+            </summary>
+        </member>
+        <member name="T:OneLogin.Serializer">
+            <summary>
+            Serializes and deserializes objects into and from the JSON format.
+            </summary>
+        </member>
+        <member name="M:OneLogin.Serializer.Serialize(System.Object)">
+            <summary>
+            Serializes the specified object to a JSON string.
+            </summary>
+            <param name="value">The object to serialize.</param>
+            <returns>A JSON string representation of the object.</returns>
+        </member>
+        <member name="M:OneLogin.Serializer.DeserializeJsonFromStream``1(System.IO.Stream)">
+            <summary>
+            Deserializes the JSON structure contained by the specified <see cref="T:System.IO.Stream"/>
+            into an instance of the specified type.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> containing the object.</param>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <returns>The instance of <typeparamref name="T"/> being deserialized.</returns>
+        </member>
+        <member name="M:OneLogin.Serializer.DeserializeJsonFromStreamReader``1(System.IO.StreamReader)">
+            <summary>
+            Deserializes the JSON structure contained by the specified <see cref="T:System.IO.StreamReader"/>
+            into an instance of the specified type.
+            </summary>
+            <param name="streamReader">The <see cref="T:System.IO.StreamReader"/> containing the object.</param>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <returns>The instance of <typeparamref name="T"/> being deserialized.</returns>
+        </member>
+        <member name="T:OneLogin.Types.Device">
+            <summary>
+            Information about the device being used.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.Device.Id">
+            <summary>
+            This device’s unique identifier
             </summary>
         </member>
         <member name="T:OneLogin.Types.ProvisionedTypes">
@@ -1612,6 +1685,21 @@
         <member name="F:OneLogin.Types.ProvisionedTypes.Yes">
             <summary>
             Yes
+            </summary>
+        </member>
+        <member name="T:OneLogin.Types.RiskScore">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.Source.Id">
+            <summary>
+            A unique id that represents the source of the event.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.Source.Name">
+            <summary>
+            The name of the source
             </summary>
         </member>
         <member name="T:OneLogin.Types.State">

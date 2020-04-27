@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OneLogin.Responses;
@@ -19,9 +21,10 @@ namespace OneLogin
         private readonly string _clientSecret;
         private readonly string _region;
         private static HttpClient _client;
-        private static readonly List<string> ValidRegions = new List<string> { "us", "eu" };
         private const string JsonMediaType = "application/json";
-
+        private static readonly Serializer Serializer = new Serializer();
+        private static readonly SemaphoreSlim TokenSemaphore = new SemaphoreSlim(1, 1);
+        private static AuthenticationHeaderValue _authenticationHeader;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OneLoginClient"/> class.
@@ -40,10 +43,11 @@ namespace OneLogin
         {
             if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientSecret));
             if (string.IsNullOrWhiteSpace(clientSecret)) throw new ArgumentNullException(nameof(clientSecret));
-            if (!ValidRegions.Contains(region)) throw new ArgumentException("Invalid region code", nameof(region));
+            if (!new List<string> { "us", "eu" }.Contains(region)) throw new ArgumentException("Invalid region code", nameof(region));
             _clientId = clientId;
             _clientSecret = clientSecret;
             _region = region;
+            _client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", _region)) };
         }
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace OneLogin
         /// <returns>Returns the serialized <see cref="GenerateTokensResponse"/> as an asynchronous operation.</returns>
         public async Task<GenerateTokensResponse> GenerateTokens()
         {
+            // This calls should only happen every few hours. Using localized HttpClient.
             var client = new HttpClient();
 
             var credentials = $"{_clientId}:{_clientSecret}";
@@ -67,14 +72,14 @@ namespace OneLogin
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri(Endpoints.Token.Replace("<us_or_eu>", _region)),
-                Content = content
+                Content = content,
             };
 
             // We add the Content-Type Header like this because otherwise dotnet
             // adds the utf-8 charset extension to it which is not compatible with OneLogin
             request.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
 
-            var response = client.SendAsync(request);
+            var response = await client.SendAsync(request);
             return await ParseHttpResponse<GenerateTokensResponse>(response);
         }
 
@@ -131,92 +136,127 @@ namespace OneLogin
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var client = await GetClient();
-            return await ParseHttpResponse<T>(client.GetAsync(url));
+            var request = await CreateRequest(url, HttpMethod.Get);
+            var response = await SendRetryAndParse<T>(request);
+            return response;
         }
 
-        private async Task<HttpClient> GetClient()
+        private async Task<T> PostResource<T>(string url, object obj)
         {
-            if (_client != null)
-            {
-                return _client;
-            }
-
-            var token = await GenerateTokens();
-            token.EnsureSuccess();
-            var client = new HttpClient { BaseAddress = new Uri(Endpoints.BaseApi.Replace("<us_or_eu>", _region)) };
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
-            return _client = client;
-        }
-
-        private async Task<T> PostResource<T>(string url, object request)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var content = new StringContent(JsonConvert.SerializeObject(request, settings: new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            }));
-            var httpRequest = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(url, UriKind.Relative),
-                Content = content
-            };
-
-            // We add the Content-Type Header like this because otherwise dotnet
-            // adds the utf-8 charset extension to it which is not compatible with OneLogin
-            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
-
-            var client = await GetClient();
-            var response = client.SendAsync(httpRequest);
-            return await ParseHttpResponse<T>(response);
+            var request = await CreateRequest(url, HttpMethod.Post, obj);
+            var response = await SendRetryAndParse<T>(request);
+            return response;
         }
 
-
-        private async Task<T> PutResource<T>(string url, object request)
+        private async Task<T> PutResource<T>(string url, object obj)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var content = new StringContent(JsonConvert.SerializeObject(request, settings: new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            }));
-            var httpRequest = new HttpRequestMessage
-            {
-                Method = HttpMethod.Put,
-                RequestUri = new Uri(url, UriKind.Relative),
-                Content = content
-            };
-
-            // We add the Content-Type Header like this because otherwise dotnet
-            // adds the utf-8 charset extension to it which is not compatible with OneLogin
-            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
-
-            var client = await GetClient();
-            var response = client.SendAsync(httpRequest);
-            return await ParseHttpResponse<T>(response);
+            var request = await CreateRequest(url, HttpMethod.Put, obj);
+            var response = await SendRetryAndParse<T>(request);
+            return response;
         }
 
         private async Task<T> DeleteResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
-            var client = await GetClient();
-            return await ParseHttpResponse<T>(client.DeleteAsync(url));
+            var request = await CreateRequest(url, HttpMethod.Delete);
+            var response = await SendRetryAndParse<T>(request);
+            return response;
         }
 
-        private async Task<T> ParseHttpResponse<T>(Task<HttpResponseMessage> taskResponse)
+        private async Task<T> ParseHttpResponse<T>(HttpResponseMessage response)
         {
-            var response = await taskResponse;
-            var responseBody = await response.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(responseBody))
-            {
-                throw new JsonSerializationException("No message to deserialize.");
-            }
-            return JsonConvert.DeserializeObject<T>(responseBody);
+            var stream = await response.Content.ReadAsStreamAsync();
+            return Serializer.DeserializeJsonFromStream<T>(stream);
         }
+
+        private async Task<AuthenticationHeaderValue> GetAuthenticationHeader()
+        {
+            if (_authenticationHeader != null)
+            {
+                return _authenticationHeader;
+            }
+
+            await TokenSemaphore.WaitAsync();
+
+            try
+            {
+                var token = await GenerateTokens();
+                token.EnsureSuccess();
+                var header = new AuthenticationHeaderValue("Bearer", token.Data[0].AccessToken);
+                Interlocked.Exchange(ref _authenticationHeader, header);
+                return header;
+            }
+            finally
+            {
+                TokenSemaphore.Release();
+            }
+        }
+
+        private async Task<T> SendRetryAndParse<T>(HttpRequestMessage httpRequest)
+        {
+            var response = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Interlocked.Exchange(ref _authenticationHeader, null);
+                var header = await GetAuthenticationHeader();
+                httpRequest.Headers.Authorization = header;
+                response = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
+            }
+            return await ParseHttpResponse<T>(response);
+        }
+
+        /// <summary>
+        /// Create a <see cref="HttpRequestMessage"/> with Authentication and Json media type headers.
+        /// </summary>
+        /// <param name="relativeUri"></param>
+        /// <param name="method"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private async Task<HttpRequestMessage> CreateRequest(string relativeUri, HttpMethod method, object obj)
+        {
+            var jsonString = Serializer.Serialize(obj);
+            var content = new StringContent(jsonString);
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = method,
+                RequestUri = new Uri(relativeUri, UriKind.Relative),
+                Content = content
+            };
+
+            // We add the Content-Type Header like this because otherwise dotnet
+            // adds the utf-8 charset extension to it which is not compatible with OneLogin
+            httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue(JsonMediaType);
+            httpRequest.Headers.Authorization = await GetAuthenticationHeader();
+            return httpRequest;
+        }
+
+        /// <summary>
+        /// Create a <see cref="HttpRequestMessage"/> with Authentication and Json media type headers.
+        /// </summary>
+        /// <param name="relativeUri"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        private async Task<HttpRequestMessage> CreateRequest(string relativeUri, HttpMethod method)
+        {
+            var httpRequest = new HttpRequestMessage
+            {
+                Method = method,
+                RequestUri = new Uri(relativeUri, UriKind.Relative)
+            };
+
+            // We add the Content-Type Header like this because otherwise dotnet
+            // adds the utf-8 charset extension to it which is not compatible with OneLogin
+            httpRequest.Headers.Authorization = await GetAuthenticationHeader();
+            return httpRequest;
+        }
+
+
     }
 }

@@ -5,7 +5,7 @@ If you find bugs or have any suggestions, feel free to create an issue.
 # Quickstart
 
 ## Including OneLogin Dot Net Client
-The OneLogin API is avaiable through [NuGet](https://www.nuget.org/packages/OneLogin.API/):
+The OneLogin API is available through [NuGet](https://www.nuget.org/packages/OneLogin.API/):
 
 ```
 > Install-Package OneLogin.API

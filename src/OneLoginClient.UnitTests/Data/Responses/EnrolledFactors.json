@@ -1,0 +1,40 @@
+﻿{
+  "status": {
+    "type": "success",
+    "code": 200,
+    "message": "Success",
+    "error": false
+  },
+  "data": {
+    "otp_devices": [
+      {
+        "type_display_name": "OneLogin SMS",
+        "active": true,
+        "user_display_name": "Rich's Phone",
+        "default": true,
+        "phone_number": "+1xxxxxxxxx",
+        "auth_factor_name": "OneLogin SMS",
+        "id": 525509,
+        "needs_trigger": true
+      },
+      {
+        "type_display_name": "OneLogin Protect",
+        "active": true,
+        "user_display_name": "OneLogin Protect",
+        "default": false,
+        "auth_factor_name": "OneLogin Protect",
+        "id": 526532,
+        "needs_trigger": false
+      },
+      {
+        "active": true,
+        "default": false,
+        "auth_factor_name": "Google Authenticator",
+        "needs_trigger": false,
+        "type_display_name": "Google Authenticator",
+        "user_display_name": "Google Authenticator",
+        "id": 526551
+      }
+    ]
+  }
+}

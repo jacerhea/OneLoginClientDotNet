@@ -12,7 +12,9 @@
         public const string Token = OneLoginApiBase + "auth/oauth2/token/";
         public const string API = "api/";
         public const string ApiVersion = "1/";
+        public const string ApiVersion2 = "2/";
         public const string BaseApi = OneLoginApiBase + API + ApiVersion;
+        public const string BaseApi2 = OneLoginApiBase + API + ApiVersion2;
 
         /// <summary>
         /// https://api.<us_or_eu>.onelogin.com/api/1/users

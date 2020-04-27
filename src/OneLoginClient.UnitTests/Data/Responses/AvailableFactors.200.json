@@ -1,0 +1,16 @@
+﻿{
+  "status": {
+    "error": false,
+    "code": 200,
+    "type": "success",
+    "message": "Success"
+  },
+  "data": {
+    "auth_factors": [
+      {
+        "name": "OneLogin SMS",
+        "factor_id": 16282
+      }
+    ]
+  }
+}

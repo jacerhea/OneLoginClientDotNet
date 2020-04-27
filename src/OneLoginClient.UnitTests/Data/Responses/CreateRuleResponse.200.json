@@ -1,0 +1,9 @@
+﻿{
+  "id": "816677874491720987",
+  "name": "IP Blacklist for Guests",
+  "description": "Blacklist for guest account users",
+  "type": "blacklist",
+  "target": "location.ip",
+  "source": "guest-123",
+  "filters": [ "123.123.123.123" ]
+}
