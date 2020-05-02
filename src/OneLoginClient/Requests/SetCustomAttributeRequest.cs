@@ -7,7 +7,7 @@ namespace OneLogin.Requests
     /// 
     /// </summary>
     [DataContract]
-    public class SetCustomAttributeValueRequest
+    public class SetCustomAttributeRequest
     {
         /// <summary>
         /// One or more key value pairs composed of the custom attribute field shortname and the value that you want to set the field 

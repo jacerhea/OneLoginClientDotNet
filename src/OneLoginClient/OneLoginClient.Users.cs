@@ -164,7 +164,7 @@ namespace OneLogin
         /// <param name="userId">Set to the id of the user for whom you want to set custom attribute values. If you don’t know the user’s id, use the Get Users API call to return all users and their id values.</param>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<EmptyResponse> SetCustomAttributeValue(int userId, SetCustomAttributeValueRequest request)
+        public async Task<EmptyResponse> SetCustomAttributeValue(int userId, SetCustomAttributeRequest request)
         {
             return await PutResource<EmptyResponse>($"{Endpoints.ONELOGIN_USERS}/{userId}/set_custom_attributes", request);
         }

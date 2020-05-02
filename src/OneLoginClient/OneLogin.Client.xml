@@ -325,7 +325,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:OneLogin.OneLoginClient.SetCustomAttributeValue(System.Int32,OneLogin.Requests.SetCustomAttributeValueRequest)">
+        <member name="M:OneLogin.OneLoginClient.SetCustomAttributeValue(System.Int32,OneLogin.Requests.SetCustomAttributeRequest)">
             <summary>
             Set a custom attribute field (also known as a custom user field) value for a user.
             The custom attribute field must exist for your account.For details about defining custom user fields in OneLogin, see Custom User Fields.
@@ -607,12 +607,12 @@
             If you want to send the invite email to an email other than the one provided in  email, provide it here. The invite link will be sent to this address instead.
             </summary>
         </member>
-        <member name="T:OneLogin.Requests.SetCustomAttributeValueRequest">
+        <member name="T:OneLogin.Requests.SetCustomAttributeRequest">
             <summary>
             
             </summary>
         </member>
-        <member name="P:OneLogin.Requests.SetCustomAttributeValueRequest.CustomAttributes">
+        <member name="P:OneLogin.Requests.SetCustomAttributeRequest.CustomAttributes">
             <summary>
             One or more key value pairs composed of the custom attribute field shortname and the value that you want to set the field 
             </summary>
