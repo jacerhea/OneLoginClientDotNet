@@ -1,0 +1,8 @@
+﻿{
+  "status": {
+    "error": true,
+    "code": 401,
+    "type": "Unauthorized",
+    "message": "Authentication Failure"
+  }
+}
