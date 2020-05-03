@@ -7,7 +7,7 @@ If you find bugs or have any suggestions, feel free to create an issue.
 ## Including OneLogin Dot Net Client
 The OneLogin API is available through [NuGet](https://www.nuget.org/packages/OneLogin.API/):
 
-```
+```PowerShell
 > Install-Package OneLogin.API
 ```
 
