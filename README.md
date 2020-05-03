@@ -13,7 +13,7 @@ The OneLogin API is avaiable through [NuGet](https://www.nuget.org/packages/OneL
 
 ## Status
 
-![Nuget](https://img.shields.io/nuget/v/OneLogin.API?style=for-the-badge)(https://www.nuget.org/packages/OneLogin.API/)
+[![Nuget](https://img.shields.io/nuget/v/OneLogin.API?style=for-the-badge)](https://www.nuget.org/packages/OneLogin.API/)
 
 ## Supported Plattforms
 OneLogin API is built on top of the new [.NET Standard](https://github.com/dotnet/standard) targeting netstandard versions 1.3 - therefore it should work on the following plaforms:
