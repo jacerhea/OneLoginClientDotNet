@@ -8,7 +8,7 @@ namespace OneLogin
     /// </summary>
     public class Serializer
     {
-        private static readonly JsonSerializer _serializer = new JsonSerializer { NullValueHandling = NullValueHandling.Ignore };
+        private static readonly JsonSerializer _serializer = new JsonSerializer { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new SnakeCaseContractResolver() };
 
         /// <summary>
         /// Serializes the specified object to a JSON string.
