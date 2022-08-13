@@ -16,19 +16,19 @@ namespace OneLoginClient.UnitTests
         [Fact]
         public void Api_Source_Api_Example_Serializes_GetRolesForUser()
         {
-            TestReserializationWithEquivalency<GetRolesForUser>("Data/GetRolesForUser.200.json");
+            TestReserializationWithEquivalency<GetRolesForUser>("Data/Responses/GetRolesForUser.200.json");
         }
 
         [Fact]
         public void Api_Source_Api_Example_Serializes_GetUserById()
         {
-            TestReserialization<GetUserResponse>("Data/GetUserById.200.json");
+            TestReserialization<GetUserResponse>("Data/Responses/GetUserById.200.json");
         }
 
         [Fact]
         public void Api_Source_Api_Example_Serializes_GetUsers()
         {
-            TestReserialization<GetUsersResponse>("Data/GetUsers.200.json");
+            TestReserialization<GetUsersResponse>("Data/Responses/GetUsers.200.json");
         }
 
         [Fact]

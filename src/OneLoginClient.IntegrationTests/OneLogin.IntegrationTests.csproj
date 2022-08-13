@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <UserSecretsId>userSecrets-c23d27a4-eb88</UserSecretsId>
     <RootNamespace>OneLogin.IntegrationTests</RootNamespace>
