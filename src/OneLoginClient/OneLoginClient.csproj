@@ -29,6 +29,6 @@ https://developers.onelogin.com/api-docs/2/getting-started/dev-overview</Descrip
     <DocumentationFile>OneLogin.Client.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>
