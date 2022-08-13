@@ -132,7 +132,8 @@ namespace OneLogin
             return results;
         }
 
-        private async Task<T> GetResource<T>(string url)
+
+        public async Task<T> GetResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
@@ -141,7 +142,7 @@ namespace OneLogin
             return response;
         }
 
-        private async Task<T> PostResource<T>(string url, object obj)
+        public async Task<T> PostResource<T>(string url, object obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
@@ -151,7 +152,7 @@ namespace OneLogin
             return response;
         }
 
-        private async Task<T> PutResource<T>(string url, object obj)
+        public async Task<T> PutResource<T>(string url, object obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
@@ -161,7 +162,7 @@ namespace OneLogin
             return response;
         }
 
-        private async Task<T> DeleteResource<T>(string url)
+        public async Task<T> DeleteResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
 
@@ -170,13 +171,13 @@ namespace OneLogin
             return response;
         }
 
-        private async Task<T> ParseHttpResponse<T>(HttpResponseMessage response)
+        public async Task<T> ParseHttpResponse<T>(HttpResponseMessage response)
         {
             var stream = await response.Content.ReadAsStreamAsync();
             return Serializer.DeserializeJsonFromStream<T>(stream);
         }
 
-        private async Task<AuthenticationHeaderValue> GetAuthenticationHeader()
+        public async Task<AuthenticationHeaderValue> GetAuthenticationHeader()
         {
             if (_authenticationHeader != null)
             {
