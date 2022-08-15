@@ -31,13 +31,9 @@ namespace OneLogin
                     {"until", until.ToString()},
                     {"username", userName},
                     {"userprincipalname", userPrincipalName}
-                }
-                .Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
-                .Select(kv => $"{kv.Key}={kv.Value}")
-                .ToList();
+                };
 
-            var url = $"{Endpoints.ONELOGIN_USERS}{(parameters.Any() ? "?" : "")}" + string.Join("&", parameters);
-            return await GetResource<GetUsersResponse>(url);
+            return await GetResource<GetUsersResponse>(Endpoints.ONELOGIN_USERS, parameters);
         }
 
         /// <summary>

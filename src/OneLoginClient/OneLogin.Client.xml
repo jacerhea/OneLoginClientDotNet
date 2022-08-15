@@ -88,6 +88,49 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:OneLogin.OneLoginClient.GetResource``1(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Utility method to call OneLogin GET API endpoints and deserialize response
+            </summary>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <param name="path">The path of the API endpoint</param>
+            <param name="queryParameters">A dictionary of query string parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.GetResource``1(System.String)">
+            <summary>
+            Utility method to call OneLogin GET API endpoints and deserialize response
+            </summary>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.PostResource``1(System.String,System.Object)">
+            <summary>
+            Utility method to call OneLogin POST API endpoints and deserialize response
+            </summary>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+            <param name="obj">The object to serialize</param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.PutResource``1(System.String,System.Object)">
+            <summary>
+            Utility method to call OneLogin PUT API endpoints and deserialize response
+            </summary>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+            <param name="obj">The object to serialize</param>
+            <returns></returns>
+        </member>
+        <member name="M:OneLogin.OneLoginClient.DeleteResource``1(System.String)">
+            <summary>
+            Utility method to call OneLogin DELETE API endpoints and deserialize response
+            </summary>
+            <typeparam name="T">The type of the object to deserialize.</typeparam>
+            <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+            <returns></returns>
+        </member>
         <member name="M:OneLogin.OneLoginClient.CreateRequest(System.String,System.Net.Http.HttpMethod,System.Object)">
             <summary>
             Create a <see cref="T:System.Net.Http.HttpRequestMessage"/> with Authentication and Json media type headers.

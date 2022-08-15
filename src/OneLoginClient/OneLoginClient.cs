@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -132,7 +133,30 @@ namespace OneLogin
             return results;
         }
 
+        /// <summary>
+        /// Utility method to call OneLogin GET API endpoints and deserialize response
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="path">The path of the API endpoint</param>
+        /// <param name="queryParameters">A dictionary of query string parameters</param>
+        /// <returns></returns>
+        public async Task<T> GetResource<T>(string path, Dictionary<string, string> queryParameters)
+        {
+            var parameters = queryParameters
+                .Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
+                .Select(kv => $"{kv.Key}={kv.Value}")
+                .ToList();
 
+            var url = $"{path}{(parameters.Any() ? "?" : "")}" + string.Join("&", parameters);
+            return await GetResource<T>(url);
+        }
+
+        /// <summary>
+        /// Utility method to call OneLogin GET API endpoints and deserialize response
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+        /// <returns></returns>
         public async Task<T> GetResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }
@@ -142,6 +166,13 @@ namespace OneLogin
             return response;
         }
 
+        /// <summary>
+        /// Utility method to call OneLogin POST API endpoints and deserialize response
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+        /// <param name="obj">The object to serialize</param>
+        /// <returns></returns>
         public async Task<T> PostResource<T>(string url, object obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
@@ -152,6 +183,13 @@ namespace OneLogin
             return response;
         }
 
+        /// <summary>
+        /// Utility method to call OneLogin PUT API endpoints and deserialize response
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+        /// <param name="obj">The object to serialize</param>
+        /// <returns></returns>
         public async Task<T> PutResource<T>(string url, object obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
@@ -162,6 +200,12 @@ namespace OneLogin
             return response;
         }
 
+        /// <summary>
+        /// Utility method to call OneLogin DELETE API endpoints and deserialize response
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="url">The relative URL (path and optional query string) of the API endpoint</param>
+        /// <returns></returns>
         public async Task<T> DeleteResource<T>(string url)
         {
             if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException(nameof(url)); }

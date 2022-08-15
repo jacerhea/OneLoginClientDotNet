@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using OneLogin.Requests;
 using OneLogin.Responses;
@@ -46,14 +45,9 @@ namespace OneLogin
                     {"since", since.ToString()},
                     {"until", until.ToString()},
                     {"user_id", userId.ToString()},
-                }
-                .Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
-                .Select(kv => $"{kv.Key}={kv.Value}")
-                .ToList();
+                };
 
-            var url = $"{Endpoints.ONELOGIN_EVENTS}{(parameters.Any() ? "?" : "")}" + string.Join("&", parameters);
-
-            return await GetResource<GetEventsResponse>(url);
+            return await GetResource<GetEventsResponse>(Endpoints.ONELOGIN_EVENTS, parameters);
         }
 
         /// <summary>
