@@ -35,6 +35,11 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.Token" -->
+        <member name="F:OneLogin.Endpoints.ONELOGIN_APPS">
+            <summary>
+            https://api.{us_or_eu}.onelogin.com/api/2/apps
+            </summary>
+        </member>
         <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_USERS" -->
         <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_GROUPS" -->
         <!-- Badly formed XML comment ignored for member "F:OneLogin.Endpoints.ONELOGIN_EVENTS" -->
@@ -1704,6 +1709,47 @@
             <param name="streamReader">The <see cref="T:System.IO.StreamReader"/> containing the object.</param>
             <typeparam name="T">The type of the object to deserialize.</typeparam>
             <returns>The instance of <typeparamref name="T"/> being deserialized.</returns>
+        </member>
+        <member name="P:OneLogin.Types.AppConfiguration.CustomProperties">
+            <summary>
+            Additional configuration based on the connector requirements
+            </summary>
+            <remarks>Any property added to this dictionary will be passed in the same case that is provided</remarks>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.Id">
+            <summary>
+            ID of the application
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.Name">
+            <summary>
+            Name of the application.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.Visible">
+            <summary>
+            Indicates whether the app is visible.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.ConnectorId">
+            <summary>
+            ID of the apps underlying connector.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.AuthMethod">
+            <summary>
+            Type of app
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.CreatedAt">
+            <summary>
+            The date the app was created.
+            </summary>
+        </member>
+        <member name="P:OneLogin.Types.AppSummary.UpdatedAt">
+            <summary>
+            The date the app was last updated.
+            </summary>
         </member>
         <member name="T:OneLogin.Types.Device">
             <summary>
