@@ -17,6 +17,11 @@
         public const string BaseApi2 = OneLoginApiBase + API + ApiVersion2;
 
         /// <summary>
+        /// https://api.{us_or_eu}.onelogin.com/api/2/apps
+        /// </summary>
+        public const string ONELOGIN_APPS = "apps";
+
+        /// <summary>
         /// https://api.<us_or_eu>.onelogin.com/api/1/users
         /// </summary>
         public const string ONELOGIN_USERS = "users";
